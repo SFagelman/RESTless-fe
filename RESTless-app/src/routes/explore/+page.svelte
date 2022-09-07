@@ -1,5 +1,15 @@
 <script>
 	import { onMount } from 'svelte';
+<<<<<<< HEAD
+	import Nav from "../../nav.svelte";
+	import fetchAllExercises from '../../api';
+
+	let data = [];
+
+	onMount(async () => {
+		const result = await fetchAllExercises();
+		data = result.data;
+=======
 	import axios from "axios"
 
 	let data = [];
@@ -10,18 +20,25 @@
 		data = exercises;
 		console.log(data);
 	
+>>>>>>> b3ff3cd7611dd45abe34bed3f84b11b8ff564b69
 	});
+
 </script>
 
 <div class="home-container">
-	<h1 class="nav"><a href="/">RESTless</a></h1>
+	<Nav />
 	<div class="button-container">
 		<button class="home-buttons">Filter Exercises</button>
 		<h2>Choose a Exercise</h2>
 
 		<ul {data}>
+<<<<<<< HEAD
+			{#each data as exercise}
+				<li>{exercise.name}</li>
+=======
 			{#each data as item}
 				<li>{item.name} hello</li>
+>>>>>>> b3ff3cd7611dd45abe34bed3f84b11b8ff564b69
 			{/each}
 		</ul>
 
