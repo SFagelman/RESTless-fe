@@ -1,8 +1,10 @@
 <script>
+	import Nav from "../../nav.svelte";
 </script>
 
 <div class="home-container">
-	<h1 class="nav"><a href="/">RESTless</a></h1>
+	<Nav />
+	<h1>Workouts Selection</h1>
 	<div class="button-container">
 		<button class="home-buttons">Workout 1</button>
 		<button class="home-buttons">Workout 2</button>
