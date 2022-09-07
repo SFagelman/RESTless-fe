@@ -1,12 +1,14 @@
 <script>
 	import { onMount } from 'svelte';
+	import axios from "axios"
 
 	let data = [];
 	onMount(async () => {
-		const res = await fetch('https://zeshan-nc-news.herokuapp.com/api/topics');
+		const res = await fetch("https://restless-be.fly.dev/api/exercises");
 
-		const { topics } = await res.json();
-		data = topics;
+		const  exercises  = await res.json();
+		data = exercises;
+		console.log(data);
 	
 	});
 </script>
@@ -19,7 +21,7 @@
 
 		<ul {data}>
 			{#each data as item}
-				<li>{item.slug} hello</li>
+				<li>{item.name} hello</li>
 			{/each}
 		</ul>
 
