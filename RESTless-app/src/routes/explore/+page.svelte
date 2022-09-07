@@ -19,9 +19,9 @@
 		<button class="home-buttons">Filter Exercises</button>
 		<h2>Choose a Exercise</h2>
 
-		<ul {data}>
+		<ul class="exercises-list" {data}>
 			{#each data as item}
-				<li>{item.name} hello</li>
+				<li>{item.name}</li>
 			{/each}
 		</ul>
 
@@ -65,5 +65,13 @@
 		font-size: 2rem;
 		font-family: 'Courier New', Courier, monospace;
 		border: #eeeeee;
+	}
+	.exercises-list{
+		font-size: 1rem;
+		font-family: 'Courier New', Courier, monospace;
+		list-style: none;
+ 
+ 
+ 
 	}
 </style>
