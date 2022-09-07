@@ -23,7 +23,7 @@
 			{/each}
 		</ul>
 
-		<p>hgsfi</p>
+
 	</div>
 </div>
 
