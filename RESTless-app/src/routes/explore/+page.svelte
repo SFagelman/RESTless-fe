@@ -1,6 +1,5 @@
 <script>
 	import { onMount } from 'svelte';
-<<<<<<< HEAD
 	import Nav from "../../nav.svelte";
 	import fetchAllExercises from '../../api';
 
@@ -9,36 +8,31 @@
 	onMount(async () => {
 		const result = await fetchAllExercises();
 		data = result.data;
-=======
-	import axios from "axios"
-
-	let data = [];
-	onMount(async () => {
-		const res = await fetch("https://restless-be.fly.dev/api/exercises");
-
-		const  exercises  = await res.json();
-		data = exercises;
-		console.log(data);
-	
->>>>>>> b3ff3cd7611dd45abe34bed3f84b11b8ff564b69
+		
 	});
 
 </script>
 
 <div class="home-container">
 	<Nav />
+	<h1>Explore</h1>
 	<div class="button-container">
 		<button class="home-buttons">Filter Exercises</button>
-		<h2>Choose a Exercise</h2>
+		
 
-		<ul {data}>
-<<<<<<< HEAD
+		
+		<ul class="exercises-list" {data}>
 			{#each data as exercise}
-				<li>{exercise.name}</li>
-=======
-			{#each data as item}
-				<li>{item.name} hello</li>
->>>>>>> b3ff3cd7611dd45abe34bed3f84b11b8ff564b69
+
+			<li>
+			<section>
+			<h3>{exercise.name}</h3>
+			<p>Equipment: {exercise.equipment}</p>
+			<p>Target: {exercise.target}</p>
+			</section>	
+			<img src={exercise.gifUrl} alt={exercise.name}/>
+			</li>
+				
 			{/each}
 		</ul>
 
@@ -72,15 +66,32 @@
 	.button-container {
 		padding: 0px 20px;
 	}
-	.nav {
-		display: flex;
-		justify-content: center;
-		text-align: center;
-		align-items: center;
-		padding: 15px;
-		color: #00adb5;
-		font-size: 2rem;
+
+	.exercises-list{
+		font-size: 1rem;
 		font-family: 'Courier New', Courier, monospace;
-		border: #eeeeee;
+		list-style: none;
+	
+ 	}
+
+	.exercises-list li{
+		border: 3px black solid;
+		display: flex;
+		justify-content: space-between;
+		margin: 10px;
+	
+
+	}
+	.exercises-list section{
+		display: flex;
+		flex-direction: column;
+	
+	}
+	
+	.exercises-list li img{
+		width: 100px;
+		padding-bottom: 2px;
+		
+		
 	}
 </style>
