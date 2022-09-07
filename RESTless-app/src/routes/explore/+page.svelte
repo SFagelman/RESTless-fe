@@ -1,25 +1,26 @@
 <script>
 	import { onMount } from 'svelte';
+	import Nav from "../../nav.svelte";
+	import fetchAllExercises from '../../api';
 
 	let data = [];
-	onMount(async () => {
-		const res = await fetch('https://zeshan-nc-news.herokuapp.com/api/topics');
 
-		const { topics } = await res.json();
-		data = topics;
-	
+	onMount(async () => {
+		const result = await fetchAllExercises();
+		data = result.data;
 	});
+
 </script>
 
 <div class="home-container">
-	<h1 class="nav"><a href="/">RESTless</a></h1>
+	<Nav />
 	<div class="button-container">
 		<button class="home-buttons">Filter Exercises</button>
 		<h2>Choose a Exercise</h2>
 
 		<ul {data}>
-			{#each data as item}
-				<li>{item.slug} hello</li>
+			{#each data as exercise}
+				<li>{exercise.name}</li>
 			{/each}
 		</ul>
 
