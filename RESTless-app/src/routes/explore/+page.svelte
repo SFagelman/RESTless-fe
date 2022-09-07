@@ -7,7 +7,7 @@
 
 		const { topics } = await res.json();
 		data = topics;
-		console.log(data, '<<<<<<<<<<');
+	
 	});
 </script>
 
