@@ -1,14 +1,16 @@
 <script>
-	import Nav from "../../nav.svelte";
+import { Link } from "svelte-routing";
+
 </script>
 
 <div class="home-container">
-	<Nav />
+
 	<h1>Workouts Selection</h1>
 	<div class="button-container">
-		<button class="home-buttons"><a href="/workout/1">Select</a>Workout 1</button>
+		<Link to="current-workout">Select</Link>
+		<Link to="edit-workout">Edit</Link>
 		<button class="home-buttons">Workout 2</button>
-		<button class="home-buttons">Add New</button>
+		<Link to="add-new-workout">Add New</Link>
 	</div>
 </div>
 

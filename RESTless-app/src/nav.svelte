@@ -1,8 +1,12 @@
 <script>
+import { Link, Router } from "svelte-routing";
+
 </script>
 
 <div class="nav">
-	<h1><a href="/">RESTless</a></h1>
+	<Link to="/">RESTless</Link>
+	
+
 </div>
 
 <style>
