@@ -1,9 +1,14 @@
 <script>
 	import Nav from '../nav.svelte';
+	import Login from '../Login.svelte';
+	import {setContext} from 'svelte';
+
+	setContext('activeUser',{_id: 'none', user_name: 'None', user_password: 'none'});
 </script>
 
 <div class="home-container">
 	<Nav />
+	<Login/>
 	<h1>Home</h1>
 	<div class="button-container">
 		<button class="home-buttons"><a href="/workouts">Choose Workout</a></button>
@@ -17,6 +22,7 @@
 		padding: 0;
 		box-sizing: border-box;
 	}
+
 	.home-container {
 		justify-content: center;
 		background: grey;
