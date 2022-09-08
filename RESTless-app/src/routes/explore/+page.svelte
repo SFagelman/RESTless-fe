@@ -1,6 +1,5 @@
 <script>
 	import { onMount } from 'svelte';
-<<<<<<< HEAD
 	import Nav from "../../nav.svelte";
 	import fetchAllExercises from '../../api';
 
@@ -9,18 +8,6 @@
 	onMount(async () => {
 		const result = await fetchAllExercises();
 		data = result.data;
-=======
-	import axios from "axios"
-
-	let data = [];
-	onMount(async () => {
-		const res = await fetch("https://restless-be.fly.dev/api/exercises");
-
-		const  exercises  = await res.json();
-		data = exercises;
-		console.log(data);
-	
->>>>>>> b3ff3cd7611dd45abe34bed3f84b11b8ff564b69
 	});
 
 </script>
@@ -32,13 +19,8 @@
 		<h2>Choose a Exercise</h2>
 
 		<ul {data}>
-<<<<<<< HEAD
 			{#each data as exercise}
 				<li>{exercise.name}</li>
-=======
-			{#each data as item}
-				<li>{item.name} hello</li>
->>>>>>> b3ff3cd7611dd45abe34bed3f84b11b8ff564b69
 			{/each}
 		</ul>
 
