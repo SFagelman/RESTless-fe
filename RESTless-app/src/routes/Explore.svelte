@@ -1,7 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
-	import Nav from "../../nav.svelte";
-	import fetchAllExercises from '../../api';
+	import {fetchAllExercises} from '../api';
 
 	let data = [];
 
@@ -14,7 +13,6 @@
 </script>
 
 <div class="home-container">
-	<Nav />
 	<h1>Explore</h1>
 	
 	<div class="button-container">

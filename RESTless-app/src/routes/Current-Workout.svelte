@@ -1,12 +1,12 @@
 <script>
-import Nav from "../../../nav.svelte";
+
 
 
 </script>
 
 <div class="workout-container">
-	<Nav/>
-	<h1>Workouts/1 Selection</h1>
+	
+	<h1>Current Workout</h1>
 	<div class="workout-selection-container">
         <h1>Shoulder Press</h1>
 		<button class="add-exercise-buttons">Add Exc</button>

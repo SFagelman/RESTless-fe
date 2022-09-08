@@ -1,29 +1,9 @@
 <script>
-import Nav from "../../../nav.svelte";
-
 
 </script>
 
 <div class="workout-container">
-	<Nav/>
-	<h1>Workouts/1 Selection</h1>
-	<div class="button-container">
-        <h1>Shoulder Press</h1>
-		<button class="add-exercise-buttons">Add Exc</button>
-        <div class="weight-reps">
-            <h2>Weight:</h2>
-            <h2>Reps:</h2>
-        </div>
-        <div class="sets">
-            <h2>Next Set:</h2>
-            <h2>Sets Remaining:</h2>
-        </div>
-        <div class="feedback">
-            <h2>Workout Rating</h2>
-            <h2>FEEDBACK</h2>
-            <h2>Next Workout:</h2>
-        </div>
-	</div>
+	<h1>Add New Workout</h1>
 </div>
 
 <style>
