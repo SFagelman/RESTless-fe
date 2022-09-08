@@ -9,6 +9,7 @@
 <div class="home-container">
 	<Nav />
 	<Login/>
+	<h1>Home</h1>
 	<div class="button-container">
 		<button class="home-buttons"><a href="/workouts">Choose Workout</a></button>
 		<button class="home-buttons explore"><a href="/explore">Explore</a></button>
