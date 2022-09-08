@@ -17,4 +17,9 @@
 		font-family: 'Courier New', Courier, monospace;
 		border: #eeeeee;
 	}
+	a {
+  color: black;
+  text-decoration: none;
+
+}
 </style>

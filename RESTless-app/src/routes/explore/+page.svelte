@@ -16,8 +16,45 @@
 <div class="home-container">
 	<Nav />
 	<h1>Explore</h1>
+	
 	<div class="button-container">
-		<button class="home-buttons">Filter Exercises</button>
+		
+		<h2 class="filter-title" >Filter Exercises</h2>
+		<div class="filter-exercises">
+			<div>
+				<h3>Body Part</h3>
+				<select class="dropdown"> 
+					<option>Arms</option>
+					<option>Back</option>
+					<option>Shoulder</option>
+
+
+				</select>
+			</div>
+			<div>
+				<h3>Target</h3>
+				<select class="dropdown">
+					<option>Triceps</option>
+					<option>Traps</option>
+					<option>Pectorals</option>
+				</select>
+			</div>
+			<div>
+				<h3>Equipment</h3>
+				<select class="dropdown"> 
+					<option>Band</option>
+					<option>Cable</option>
+					<option>Upper Body</option>
+				</select>
+			</div>
+		
+			
+		</div>
+		
+			
+	
+
+		
 		
 
 		
@@ -51,20 +88,19 @@
 		background: grey;
 		min-height: 100vh;
 	}
-
-	.home-buttons {
-		display: block;
-		padding: 2rem 6rem;
-		font-size: 1.8rem;
-		font-family: 'Courier New', Courier, monospace;
-		background: #00adb5;
-		border-color: #eeeeee;
-		border-radius: 12px;
-		margin: 15px 0px;
-		width: 100%;
+	.filter-title{
+		text-align: center;
 	}
-	.button-container {
-		padding: 0px 20px;
+	.filter-exercises{
+		border: 3px black solid;
+		display: flex;
+		justify-content: space-between;
+		padding: 2px;
+
+	}
+	.dropdown{
+		width: 90px;
+		margin: 2px;
 	}
 
 	.exercises-list{
@@ -94,4 +130,5 @@
 		
 		
 	}
+	
 </style>
