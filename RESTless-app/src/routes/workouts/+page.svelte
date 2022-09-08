@@ -6,11 +6,12 @@
 	<Nav />
 	<h1>Workouts Selection</h1>
 	<div class="button-container">
-		<button class="home-buttons">Workout 1</button>
+		<button class="home-buttons"><a href="/workout/1">Select</a>Workout 1</button>
 		<button class="home-buttons">Workout 2</button>
 		<button class="home-buttons">Add New</button>
 	</div>
 </div>
+
 
 <style>
 	:global(*) {
@@ -38,15 +39,5 @@
 	.button-container {
 		padding: 0px 20px;
 	}
-	.nav {
-		display: flex;
-		justify-content: center;
-		text-align: center;
-		align-items: center;
-		padding: 15px;
-		color: #00adb5;
-		font-size: 2rem;
-		font-family: 'Courier New', Courier, monospace;
-		border: #eeeeee;
-	}
+	
 </style>
