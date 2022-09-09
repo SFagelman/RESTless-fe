@@ -33,4 +33,16 @@ const attemptUserLogin = (username = null, password = null) => {
 		});
 };
 
-export { fetchAllExercises, attemptUserLogin };
+const fetchAllWorkouts = (username) => {
+	console.log(username);
+	return backEndClient
+		.get(`/api/workouts/${username}`)
+		.then((res) => {
+			return res;
+		})
+		.catch((err) => {
+			return err;
+		});
+};
+
+export { fetchAllExercises, attemptUserLogin, fetchAllWorkouts };

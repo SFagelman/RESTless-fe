@@ -1,5 +1,19 @@
 <script>
+import { afterUpdate, getContext, onMount } from "svelte";
 import { Link } from "svelte-routing";
+import { fetchAllWorkouts } from "../api";
+
+let data = [];
+
+let currentUser = getContext('activeUser');
+
+onMount(async () => {
+		
+		const result = await fetchAllWorkouts(currentUser.user_name);
+		console.log(result);
+		data = result.data;
+		
+	});
 
 </script>
 
@@ -12,6 +26,17 @@ import { Link } from "svelte-routing";
 		<button class="home-buttons">Workout 2</button>
 		<Link to="add-new-workout">Add New</Link>
 	</div>
+
+	<ul class="exercises-list" {data}>
+		{#each data as workout}
+
+		<li>
+		<section>
+		<h3>{workout.name}</h3>
+		</li>
+			
+		{/each}
+	</ul>
 </div>
 
 
