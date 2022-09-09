@@ -24,7 +24,6 @@ const attemptUserLogin = (username = null, password = null) => {
 		.get(`/api/users?user_name=${username}&user_password=${password}`)
 		.then((res, err) => {
 			if (res.data.user) {
-				console.log(res.data.user);
 				return res.data.user;
 			}
 		})

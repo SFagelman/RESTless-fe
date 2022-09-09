@@ -45,16 +45,7 @@
 					<option>Upper Body</option>
 				</select>
 			</div>
-		
-			
 		</div>
-		
-			
-	
-
-		
-		
-
 		
 		<ul class="exercises-list" {data}>
 			{#each data as exercise}

@@ -5,13 +5,16 @@ import { fetchAllWorkouts } from "../api";
 
 let data = [];
 
-let currentUser = getContext('activeUser');
+import {currentUser} from "../stores.js";
+
+
+
 
 onMount(async () => {
 		
-		const result = await fetchAllWorkouts(currentUser.user_name);
-		console.log(result);
-		data = result.data;
+		const result = await fetchAllWorkouts($currentUser.user_name);
+		data = result.data.workouts;
+		console.log(data);
 		
 	});
 
@@ -32,7 +35,7 @@ onMount(async () => {
 
 		<li>
 		<section>
-		<h3>{workout.name}</h3>
+		<h3>{workout.workout_name}</h3>
 		</li>
 			
 		{/each}
