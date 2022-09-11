@@ -1,6 +1,8 @@
 import { writable } from 'svelte/store';
 
-export const currentUser = writable({ _id: '', user_name: '', user_password: '' });
+
+export const currentUser = writable({ _id: 'none', user_name: 'None', user_password: 'none' });
+
 
 export const currentWorkout = writable({
 	workout_name: 'full body',
@@ -46,7 +48,9 @@ export const currentWorkout = writable({
 			target: 'calves',
 			bodyPart: 'lower legs',
 			equipment: 'smith machine',
+
 			NumberOfSets: 3,
+
 			feedback: '',
 			sets: [
 				{

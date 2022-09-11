@@ -1,45 +1,55 @@
 <script>
-import { afterUpdate, getContext, onMount } from "svelte";
 import { Link } from "svelte-routing";
 import { fetchAllWorkouts } from "../api";
-
-let data = [];
-
-import {currentUser} from "../stores.js";
+import {currentUser, currentWorkout} from "../stores.js";
+import {link, navigate} from "svelte-routing"
 
 
+$: data = fetchAllWorkouts($currentUser.user_name).then((result) => {
+	if(result.data.workouts){
+		return result.data.workouts;
+	} else {
+		return [];
+	}
+})
 
+const setWorkoutAndRedirect = (workout,route) => {
+	$currentWorkout = workout;
+	navigate(route);
+}
 
-onMount(async () => {
-		
-		const result = await fetchAllWorkouts($currentUser.user_name);
-		data = result.data.workouts;
-		console.log(data);
-		
-	});
 
 </script>
 
 <div class="home-container">
 
 	<h1>Workouts Selection</h1>
-	<div class="button-container">
-		<Link to="current-workout">Select</Link>
-		<Link to="edit-workout">Edit</Link>
-		<button class="home-buttons">Workout 2</button>
-		<Link to="add-new-workout">Add New</Link>
-	</div>
 
-	<ul class="exercises-list" {data}>
-		{#each data as workout}
+	{#await data}
+		<p>Getting workouts</p>
+	{:then data}
+		{#if $currentUser.user_name === 'None'}
+			<p>Please login to view workouts</p>
+		{:else}
+			<ul class="exercises-list" {data}>
+				{#each data as workout}
 
-		<li>
-		<section>
-		<h3>{workout.workout_name}</h3>
-		</li>
-			
-		{/each}
-	</ul>
+				<li class="panel">
+					<h3>{workout.workout_name}</h3>
+					<section>
+						<button on:click={() => setWorkoutAndRedirect(workout,'current-workout')}>Select</button>
+						<button on:click={() => setWorkoutAndRedirect(workout,'edit-workout')}>Select</button>
+					</section>
+				</li>
+				{/each}
+				<Link to="add-new-workout">Add New</Link>
+			</ul>
+		{/if}
+	{:catch error}
+		<p style="color:red">{error.message}</p>
+	{/await}
+
+	
 </div>
 
 
@@ -55,19 +65,20 @@ onMount(async () => {
 		min-height: 100vh;
 	}
 
-	.home-buttons {
-		display: block;
-		padding: 2rem 6rem;
-		font-size: 1.8rem;
-		font-family: 'Courier New', Courier, monospace;
-		background: #00adb5;
-		border-color: #eeeeee;
-		border-radius: 12px;
-		margin: 15px 0px;
-		width: 100%;
+	.panel {
+		border: 3px black solid;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		padding: 2px;
 	}
-	.button-container {
-		padding: 0px 20px;
+
+	.panel section {
+		display: flex;
+		width: 100%;
+		border: 2px solid red;
+		justify-content: space-around;
 	}
 	
 </style>
