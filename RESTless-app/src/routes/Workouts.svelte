@@ -1,8 +1,9 @@
 <script>
 import { Link } from "svelte-routing";
 import { fetchAllWorkouts } from "../api";
-import {currentUser} from "../stores.js";
-import SelectWorkout from '../SelectWorkout.svelte'
+import {currentUser, currentWorkout} from "../stores.js";
+import {link, navigate} from "svelte-routing"
+
 
 $: data = fetchAllWorkouts($currentUser.user_name).then((result) => {
 	if(result.data.workouts){
@@ -11,6 +12,11 @@ $: data = fetchAllWorkouts($currentUser.user_name).then((result) => {
 		return [];
 	}
 })
+
+const setWorkoutAndRedirect = (workout,route) => {
+	$currentWorkout = workout;
+	navigate(route);
+}
 
 
 </script>
@@ -31,8 +37,8 @@ $: data = fetchAllWorkouts($currentUser.user_name).then((result) => {
 				<li class="panel">
 					<h3>{workout.workout_name}</h3>
 					<section>
-						<SelectWorkout/>
-						<Link to="edit-workout">Edit</Link>
+						<button on:click={() => setWorkoutAndRedirect(workout,'current-workout')}>Select</button>
+						<button on:click={() => setWorkoutAndRedirect(workout,'edit-workout')}>Select</button>
 					</section>
 				</li>
 				{/each}
