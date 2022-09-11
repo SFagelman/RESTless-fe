@@ -44,4 +44,15 @@ const fetchAllWorkouts = (username) => {
 		});
 };
 
-export { fetchAllExercises, attemptUserLogin, fetchAllWorkouts };
+const fetchExerciseById = (id) => {
+	return backEndClient
+		.get(`/api/exercises`, { params: { id } })
+		.then((res) => {
+			return res.data[0];
+		})
+		.catch((err) => {
+			return err;
+		});
+};
+
+export { fetchAllExercises, attemptUserLogin, fetchAllWorkouts, fetchExerciseById };
