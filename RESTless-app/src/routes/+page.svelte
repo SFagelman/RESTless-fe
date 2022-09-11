@@ -15,7 +15,6 @@ import EditWorkout from './Edit-workout.svelte';
 </script>
 
 <div class="home-container">
-
 	<Router url="{url}">
 	<Nav />
 	<Login/>

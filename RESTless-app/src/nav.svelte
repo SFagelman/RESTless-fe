@@ -1,10 +1,13 @@
 <script>
-import { Link, Router } from "svelte-routing";
+import { Link } from "svelte-routing";
+import { currentWorkout} from "./stores.js";
 
+$: activeWorkout = currentWorkout;
 </script>
 
 <div class="nav">
 	<Link to="/">RESTless</Link>
+	{$activeWorkout.workout_name}
 	
 
 </div>
