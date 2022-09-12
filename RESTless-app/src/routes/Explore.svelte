@@ -90,7 +90,7 @@
 				}
 			]
 		});
-		console.log($currentWorkout);
+		// console.log($currentWorkout);
 	};
 </script>
 
