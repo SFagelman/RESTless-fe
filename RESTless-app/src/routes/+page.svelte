@@ -32,12 +32,50 @@ import EditWorkout from './Edit-workout.svelte';
 		margin: 0;
 		padding: 0;
 		box-sizing: border-box;
+		text-align: center;
+		font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 	}
 
 	.home-container {
 		justify-content: center;
-		background: grey;
+		background: whitesmoke;
 		min-height: 100vh;
 		padding: 5vw;
+	}
+
+	:global(.main-panel){
+		color: white;
+		background-color: red;
+  		text-decoration: none;
+		width: 100%;
+		padding: 0.5rem;
+	}
+
+	:global(.sub-panel){
+		color: black;
+		background-color: lightgrey;
+  		text-decoration: none;
+		width: 100%;
+		padding: 0.5rem;
+	}
+
+	:global(.panel){
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		color: white;
+		background-color: red;
+  		text-decoration: none;
+		width: 100%;
+		padding: 0.5rem;
+		margin-top: 0.5rem;
+	}
+
+	:global(button){
+		width: 100%;
+		padding: 0.5rem;
+		color: black;
+		font-size: 1rem;
 	}
 </style>

@@ -181,7 +181,6 @@
 
 	.exercises-list {
 		font-size: 1rem;
-		font-family: 'Courier New', Courier, monospace;
 		list-style: none;
 	}
 
