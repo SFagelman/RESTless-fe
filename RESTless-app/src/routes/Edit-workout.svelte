@@ -1,13 +1,13 @@
 <script>
-	// import { onMount } from 'svelte';
+	import { patchCurrentWorkout } from '../api.js';
 	import { link } from 'svelte-routing';
-	import { currentWorkout } from '../stores.js';
+	import { currentWorkout, currentUser } from '../stores.js';
 
 	const handleClick = (exercise) => {
 		$currentWorkout.exercises.forEach((elem, index) => {
 			if (elem._id === exercise._id) $currentWorkout.exercises.splice(index, 1);
 		});
-
+		patchCurrentWorkout($currentWorkout, $currentUser.user_name);
 		$currentWorkout = $currentWorkout;
 	};
 </script>
