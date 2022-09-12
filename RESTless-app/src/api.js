@@ -44,4 +44,44 @@ const fetchAllWorkouts = (username) => {
 		});
 };
 
-export { fetchAllExercises, attemptUserLogin, fetchAllWorkouts };
+const fetchAllBodyParts = () => {
+	return backEndClient
+		.get(`/api/bodyparts`)
+		.then((res) => {
+			return res;
+		})
+		.catch((err) => {
+			return err;
+		});
+};
+
+const fetchAllTargets = () => {
+	return backEndClient
+		.get(`/api/target`)
+		.then((res) => {
+			return res;
+		})
+		.catch((err) => {
+			return err;
+		});
+};
+
+const fetchAllEquipment = () => {
+	return backEndClient
+		.get(`/api/equipment`)
+		.then((res) => {
+			return res;
+		})
+		.catch((err) => {
+			return err;
+		});
+};
+
+export {
+	fetchAllExercises,
+	attemptUserLogin,
+	fetchAllWorkouts,
+	fetchAllBodyParts,
+	fetchAllTargets,
+	fetchAllEquipment
+};
