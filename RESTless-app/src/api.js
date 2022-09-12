@@ -29,6 +29,13 @@ const attemptUserLogin = (username = null, password = null) => {
 		});
 };
 
+const postNewWorkout = (workoutName, userName, restTimer) => {
+	const workout = { workout_name: workoutName, rest_timer: restTimer, exercises: [] };
+	return backEndClient.post(`/api/workouts/${userName}`, workout).then((res) => {
+		return res;
+	});
+};
+
 const fetchAllWorkouts = (username) => {
 	return backEndClient
 		.get(`/api/workouts/${username}`)
@@ -45,7 +52,7 @@ const fetchAllBodyParts = () => {
 		.get(`/api/bodyparts`)
 		.then((res) => {
 			return res;
-   	})
+		})
 		.catch((err) => {
 			return err;
 		});
@@ -87,9 +94,10 @@ const fetchAllEquipment = () => {
 export {
 	fetchAllExercises,
 	attemptUserLogin,
+	postNewWorkout,
 	fetchAllWorkouts,
 	fetchAllBodyParts,
 	fetchAllTargets,
 	fetchAllEquipment,
-  fetchExerciseById
+	fetchExerciseById
 };

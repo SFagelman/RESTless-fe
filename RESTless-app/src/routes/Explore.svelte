@@ -6,12 +6,67 @@
 	let data = [];
 
 	onMount(async () => {
-		const result = await fetchAllExercises();
-		data = result.data;
+		const exercises = await fetchAllExercises();
+		const bodyparts = await fetchAllBodyParts();
+		const targets = await fetchAllTargets();
+		const equipment = await fetchAllEquipment();
+		allExercises = exercises.data;
+		allBodyParts = bodyparts.data;
+		allTargets = targets.data;
+		allEquipment = equipment.data;
 	});
 
+	let selectedBodyPart = 'blank';
+	let selectedTarget = 'blank';
+	let selectedEquipment = 'blank';
+
+	$: filteredExercises = allExercises;
+
+	const filterByBodyPart = () => {
+		filteredExercises = allExercises;
+		filteredExercises = filteredExercises.filter((e) => e.bodyPart === selectedBodyPart);
+		if (selectedTarget != 'blank') {
+			filteredExercises = filteredExercises.filter((e) => e.target === selectedTarget);
+		}
+		if (selectedEquipment != 'blank') {
+			filteredExercises = filteredExercises.filter((e) => e.equipment === selectedEquipment);
+		}
+	};
+
+	const filterByTarget = () => {
+		filteredExercises = allExercises;
+		filteredExercises = filteredExercises.filter((e) => e.target === selectedTarget);
+		if (selectedBodyPart != 'blank') {
+			filteredExercises = filteredExercises.filter((e) => e.bodyPart === selectedBodyPart);
+		}
+		if (selectedEquipment != 'blank') {
+			filteredExercises = filteredExercises.filter((e) => e.equipment === selectedEquipment);
+		}
+	};
+	const filterByEquipment = () => {
+		filteredExercises = allExercises;
+		filteredExercises = filteredExercises.filter((e) => e.equipment === selectedEquipment);
+		if (selectedBodyPart != 'blank') {
+			filteredExercises = filteredExercises.filter((e) => e.bodyPart === selectedBodyPart);
+		}
+		if (selectedTarget != 'blank') {
+			filteredExercises = filteredExercises.filter((e) => e.target === selectedTarget);
+		}
+	};
+
+	// if (selectedBodyPart != 'blank') {
+	// 	filteredExercises = filteredExercises.filter((e) => e.bodyPart === selectedBodyPart);
+	// }
+
+	// if (selectedTarget != 'blank') {
+	// 	filteredExercises = filteredExercises.filter((e) => e.target === selectedTarget);
+	// }
+
+	// if (selectedEquipment != 'blank') {
+	// 	filteredExercises = filteredExercises.filter((e) => e.equipment === selectedEquipment);
+	// }
+
 	const handleClick = (exercise) => {
-		console.log($currentWorkout);
 		$currentWorkout.exercises.push({
 			...exercise,
 			NumberOfSets: 2,
@@ -29,7 +84,6 @@
 				}
 			]
 		});
-		console.log($currentWorkout);
 	};
 </script>
 
