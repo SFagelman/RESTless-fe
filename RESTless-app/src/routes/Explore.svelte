@@ -17,7 +17,6 @@
 		allBodyParts = bodyparts.data;
 		allTargets = targets.data;
 		allEquipment = equipment.data;
-		// console.log(allExercises);
 	});
 
 	let selectedBodyPart = 'blank';
@@ -145,7 +144,6 @@
 						{#if $currentUser._id && $currentWorkout.workout_name}
 							<button on:click={() => handleClick(exercise)}> Add to you workout</button>
 						{/if}
-
 					</section>
 					<img src={exercise.gifUrl} alt={exercise.name} />
 				</li>
