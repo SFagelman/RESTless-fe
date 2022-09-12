@@ -1,7 +1,6 @@
 <script>
 	// import { onMount } from 'svelte';
-	import { Link } from 'svelte-routing';
-	// import { fetchExerciseById } from '../api.js';
+	import { link } from 'svelte-routing';
 	import { currentWorkout } from '../stores.js';
 
 	const handleClick = (exercise) => {
@@ -19,6 +18,7 @@
 		{#each $currentWorkout.exercises as exercise}
 			<li>
 				<section>
+					<h3>in each loop</h3>
 					<h3>{exercise.name}</h3>
 					<p>Equipment: {exercise.equipment}</p>
 					<p>Target: {exercise.target}</p>
@@ -34,8 +34,8 @@
 			</li>
 		{/each}
 	</ul>
-	<p>Under the list</p>
-	<Link to="/explore">Add an exercise</Link>
+
+	<a href="explore" class="link" use:link>Add exercises</a>
 </div>
 
 <style>
