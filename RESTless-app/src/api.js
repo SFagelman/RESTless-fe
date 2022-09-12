@@ -40,6 +40,17 @@ const fetchAllWorkouts = (username) => {
 		});
 };
 
+const fetchAllBodyParts = () => {
+	return backEndClient
+		.get(`/api/bodyparts`)
+		.then((res) => {
+			return res;
+   	})
+		.catch((err) => {
+			return err;
+		});
+};
+
 const fetchExerciseById = (id) => {
 	return backEndClient
 		.get(`/api/exercises`, { params: { id } })
@@ -51,4 +62,34 @@ const fetchExerciseById = (id) => {
 		});
 };
 
-export { fetchAllExercises, attemptUserLogin, fetchAllWorkouts, fetchExerciseById };
+const fetchAllTargets = () => {
+	return backEndClient
+		.get(`/api/target`)
+		.then((res) => {
+			return res;
+		})
+		.catch((err) => {
+			return err;
+		});
+};
+
+const fetchAllEquipment = () => {
+	return backEndClient
+		.get(`/api/equipment`)
+		.then((res) => {
+			return res;
+		})
+		.catch((err) => {
+			return err;
+		});
+};
+
+export {
+	fetchAllExercises,
+	attemptUserLogin,
+	fetchAllWorkouts,
+	fetchAllBodyParts,
+	fetchAllTargets,
+	fetchAllEquipment,
+  fetchExerciseById
+};
