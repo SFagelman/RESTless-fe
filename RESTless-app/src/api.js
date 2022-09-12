@@ -47,6 +47,18 @@ const fetchAllWorkouts = (username) => {
 		});
 };
 
+const fetchWorkoutPlans = () => {
+	return backEndClient
+		.get('/api/workoutplans')
+		.then((res) => {
+			return res;
+		})
+		.catch((err) => {
+			console.log(err);
+			return err;
+		});
+};
+
 const fetchAllBodyParts = () => {
 	return backEndClient
 		.get(`/api/bodyparts`)
@@ -96,6 +108,7 @@ export {
 	attemptUserLogin,
 	postNewWorkout,
 	fetchAllWorkouts,
+	fetchWorkoutPlans,
 	fetchAllBodyParts,
 	fetchAllTargets,
 	fetchAllEquipment,

@@ -1,5 +1,5 @@
 <script>
-import { fetchAllWorkouts, postNewWorkout } from "../api";
+import { fetchAllWorkouts, postNewWorkout, fetchWorkoutPlans } from "../api";
 import {currentUser, currentWorkout} from "../stores.js";
 import {navigate} from "svelte-routing"
 import { useForm, validators, HintGroup, Hint, required } from "svelte-use-form";
@@ -13,6 +13,19 @@ $: data = fetchAllWorkouts($currentUser.user_name).then((result) => {
 	}
 })
 
+$: plansData = fetchWorkoutPlans().then((result) => {
+	return result.data.workoutPlans;
+})
+
+let premadeWorkoutsVisible = "Show";
+
+const togglePremadeWorkouts = () => {
+	if(premadeWorkoutsVisible === "Show"){
+		premadeWorkoutsVisible = "Hide";
+	} else {
+		premadeWorkoutsVisible = "Show";
+	}
+}
 
 const setWorkoutAndRedirect = (workout,route) => {
 	$currentWorkout = workout;
@@ -45,45 +58,75 @@ const handleOnSubmit = async (event) => {
 
 <div class="home-container">
 
-	<h1>Workouts Selection</h1>
+	<button on:click={() => togglePremadeWorkouts()}>{premadeWorkoutsVisible} pre-made workouts</button>
+	
+	{#await plansData}
+		<p>Loading pre-made workout plans</p>
+	{:then plansData}
+
+
+		{#if premadeWorkoutsVisible === "Hide"}
+		<h1 class="main-panel">Pre-Made Workouts</h1>
+			
+		<ul class="workout-list">
+			{#each plansData as workout}
+			<li class="panel">
+				<h3>{workout.workout_name}</h3>
+				<section>
+					<button on:click={() => setWorkoutAndRedirect(workout,'current-workout')}>Select</button>
+					<button on:click={() => setWorkoutAndRedirect(workout,'edit-workout')}>Edit</button>
+				</section>
+			</li>
+			{/each}
+		</ul>
+		{/if}
+
+	{:catch error}
+		<p style="color:red">{error.message}</p>
+	{/await}
 
 	{#await data}
 		<p>Getting workouts</p>
 	{:then data}
-		{#if $currentUser.user_name === 'None'}
-			<p>Please login to view workouts</p>
-		{:else}
-			<ul class="workout-list" {data}>
-				{#each data as workout}
 
-				<li class="panel">
-					<h3>{workout.workout_name}</h3>
-					<section>
-						<button on:click={() => setWorkoutAndRedirect(workout,'current-workout')}>Select</button>
-						<button on:click={() => setWorkoutAndRedirect(workout,'edit-workout')}>Edit</button>
-					</section>
-				</li>
-				{/each}
-				<button class="new-workout-button" on:click={() => showHideNewWorkout()}>New Workout</button>
-				{#if newWorkoutPanel}
-				<form on:submit={handleOnSubmit} use:form>
-					<label for="workoutName">Workout name</label>
-					<input type="workoutName" name="workoutName" use:validators={[required]} />
-					<HintGroup for="workoutName">
-					  <Hint on="required">This is a mandatory field</Hint>
-					</HintGroup>
-					<label for="defaultRestTimer">Rest Timer</label>
-					<input type="defaultRestTimer" name="defaultRestTimer" use:validators={[required]} />
-					<Hint for="defaultRestTimer" on="required">This is a mandatory field</Hint>
-				  
-					<button disabled={!$form.valid}>Add Workout</button>
-				</form>
-					{#if postWorkoutError}
-						<p>Workout failed to post - please check name is unique and try again</p>
-					{/if}
+	{#if $currentUser.user_name === 'None'}
+		<p class="sub-panel">Please login to view personal workouts</p>
+	{:else}
+		<h1 class="main-panel">My Workouts</h1>
+		<ul class="workout-list" {data}>
+			{#each data as workout}
+
+			<li class="panel">
+				<h3>{workout.workout_name}</h3>
+				<section>
+					<button on:click={() => setWorkoutAndRedirect(workout,'current-workout')}>Select</button>
+					<button on:click={() => setWorkoutAndRedirect(workout,'edit-workout')}>Edit</button>
+				</section>
+			</li>
+			{/each}
+
+			<button class="new-workout-button" on:click={() => showHideNewWorkout()}>New Workout</button>
+			
+			{#if newWorkoutPanel}
+			<form on:submit={handleOnSubmit} use:form>
+				<label for="workoutName">Workout name</label>
+				<input type="workoutName" name="workoutName" use:validators={[required]} />
+				<HintGroup for="workoutName">
+					<Hint on="required">This is a mandatory field</Hint>
+				</HintGroup>
+				<label for="defaultRestTimer">Rest Timer</label>
+				<input type="defaultRestTimer" name="defaultRestTimer" use:validators={[required]} />
+				<Hint for="defaultRestTimer" on="required">This is a mandatory field</Hint>
+				
+				<button disabled={!$form.valid}>Add Workout</button>
+			</form>
+				{#if postWorkoutError}
+					<p>Workout failed to post - please check name is unique and try again</p>
 				{/if}
-			</ul>
-		{/if}
+			{/if}
+		</ul>
+	{/if}
+
 	{:catch error}
 		<p style="color:red">{error.message}</p>
 	{/await}
@@ -98,8 +141,9 @@ const handleOnSubmit = async (event) => {
 	}
 
 	.home-container {
-		justify-content: center;
-		background: grey;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 		min-height: 100vh;
 	}
 
@@ -108,13 +152,8 @@ const handleOnSubmit = async (event) => {
 		flex-direction: column;
 	}
 
-	.panel {
-		border: 3px black solid;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		padding: 2px;
+	ul {
+		width: 100%;
 	}
 
 	.panel section {

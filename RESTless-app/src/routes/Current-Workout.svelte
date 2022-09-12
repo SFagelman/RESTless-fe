@@ -40,7 +40,6 @@
 		background: grey;
 		min-height: 100vh;
         font-size: 1.8rem;
-        font-family: 'Courier New', Courier, monospace;
 	}
 
     section {
@@ -54,7 +53,6 @@
         align-content: center;
         align-items: center;
         font-size: 1.8rem;
-        font-family: 'Courier New', Courier, monospace;
         background: #00adb5;
         border-color: #eeeeee;
         border-radius: 12px;
