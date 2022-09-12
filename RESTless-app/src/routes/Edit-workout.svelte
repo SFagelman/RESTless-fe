@@ -6,26 +6,33 @@
 
 	const form = useForm();
 
-	const handleOnSubmit = (event) => {
-		event.preventDefault();
-		const newNumberOfSets = event.target[0].value;
-		const exerciseId = event.target[1].value;
-
+	const handleSetChange = (exerciseId) => {
 		$currentWorkout.exercises.forEach((elem, index, arr) => {
 			if (elem._id === exerciseId) {
-				elem.sets = [];
-				for (let i = 0; i < newNumberOfSets; i++) {
-					elem.sets.push({ weight: 0, reps: 0, time: 'null' });
+				if (elem.NumberOfSets < elem.sets.length) {
+					do elem.sets.pop();
+					while (elem.sets.length > elem.NumberOfSets);
+				} else {
+					do elem.sets.push({ weight: 10, reps: 10, time: 'null' });
+					while (elem.sets.length < elem.NumberOfSets);
 				}
-				elem.NumberOfSets = newNumberOfSets;
 			}
 		});
 		patchCurrentWorkout($currentWorkout, $currentUser.user_name);
 		$currentWorkout = $currentWorkout;
 	};
 
+	const handleWeightChange = () => {
+		patchCurrentWorkout($currentWorkout, $currentUser.user_name);
+		$currentWorkout = $currentWorkout;
+	};
+
+	const handleRepsChange = () => {
+		patchCurrentWorkout($currentWorkout, $currentUser.user_name);
+		$currentWorkout = $currentWorkout;
+	};
+
 	const handleDelete = (exercise) => {
-		console.log(exercise);
 		$currentWorkout.exercises.forEach((elem, index) => {
 			if (elem._id === exercise._id) $currentWorkout.exercises.splice(index, 1);
 		});
@@ -36,7 +43,8 @@
 	let changeSets = false;
 	const toggleChangeSets = () => (changeSets = !changeSets);
 
-	console.log($currentWorkout.exercises);
+	let changeWeightAndReps = false;
+	const toggleChangeWeightAndReps = () => (changeWeightAndReps = !changeWeightAndReps);
 </script>
 
 <div class="home-container">
@@ -45,24 +53,43 @@
 		{#each $currentWorkout.exercises as exercise}
 			<li>
 				<section>
-					<h3>in each loop</h3>
 					<h3>{exercise.name}</h3>
 					<p>Equipment: {exercise.equipment}</p>
 					<p>Target: {exercise.target}</p>
 					<p on:click={toggleChangeSets}>Sets: {exercise.NumberOfSets}</p>
 					{#if changeSets}
-						<form on:submit={handleOnSubmit} use:form>
-							<input type="number" bind:value={exercise.NumberOfSets} min="0" max="50" />
-							<input type="hidden" bind:value={exercise._id} />
-							<button>Set</button>
-						</form>
+						<input
+							on:change={() => handleSetChange(exercise._id)}
+							type="range"
+							bind:value={exercise.NumberOfSets}
+							min="0"
+							max="20"
+						/>
 					{/if}
 					{#each exercise.sets as set}
-						<div>
+						<p on:click={toggleChangeWeightAndReps}>
 							{exercise.sets.indexOf(set) + 1}. set, weight: {set.weight}kg reps: {set.reps}
-						</div>
+						</p>
+						{#if changeWeightAndReps}
+							Modify Weight:
+							<input
+								on:change={() => handleWeightChange()}
+								type="range"
+								min="0"
+								max="150"
+								step="0.25"
+								bind:value={set.weight}
+							/>
+							Modify Reps :<input
+								on:change={() => handleRepsChange()}
+								type="range"
+								min="0"
+								max="40"
+								bind:value={set.reps}
+							/>
+						{/if}
 					{/each}
-					<button on:click={() => handleDelete(exercise)}>Delete</button>
+					<button on:click={() => handleDelete(exercise)}>Delete Exercise</button>
 				</section>
 				<img src={exercise.gifUrl} alt={exercise.name} />
 			</li>
