@@ -2,14 +2,41 @@
 	import { patchCurrentWorkout } from '../api.js';
 	import { link } from 'svelte-routing';
 	import { currentWorkout, currentUser } from '../stores.js';
+	import { useForm } from 'svelte-use-form';
 
-	const handleClick = (exercise) => {
+	const form = useForm();
+
+	const handleOnSubmit = (event) => {
+		event.preventDefault();
+		const newNumberOfSets = event.target[0].value;
+		const exerciseId = event.target[1].value;
+
+		$currentWorkout.exercises.forEach((elem, index, arr) => {
+			if (elem._id === exerciseId) {
+				elem.sets = [];
+				for (let i = 0; i < newNumberOfSets; i++) {
+					elem.sets.push({ weight: 0, reps: 0, time: 'null' });
+				}
+				elem.NumberOfSets = newNumberOfSets;
+			}
+		});
+		patchCurrentWorkout($currentWorkout, $currentUser.user_name);
+		$currentWorkout = $currentWorkout;
+	};
+
+	const handleDelete = (exercise) => {
+		console.log(exercise);
 		$currentWorkout.exercises.forEach((elem, index) => {
 			if (elem._id === exercise._id) $currentWorkout.exercises.splice(index, 1);
 		});
 		patchCurrentWorkout($currentWorkout, $currentUser.user_name);
 		$currentWorkout = $currentWorkout;
 	};
+
+	let changeSets = false;
+	const toggleChangeSets = () => (changeSets = !changeSets);
+
+	console.log($currentWorkout.exercises);
 </script>
 
 <div class="home-container">
@@ -22,13 +49,20 @@
 					<h3>{exercise.name}</h3>
 					<p>Equipment: {exercise.equipment}</p>
 					<p>Target: {exercise.target}</p>
-					<p>Sets: {exercise.NumberOfSets}</p>
+					<p on:click={toggleChangeSets}>Sets: {exercise.NumberOfSets}</p>
+					{#if changeSets}
+						<form on:submit={handleOnSubmit} use:form>
+							<input type="number" bind:value={exercise.NumberOfSets} min="0" max="50" />
+							<input type="hidden" bind:value={exercise._id} />
+							<button>Set</button>
+						</form>
+					{/if}
 					{#each exercise.sets as set}
 						<div>
 							{exercise.sets.indexOf(set) + 1}. set, weight: {set.weight}kg reps: {set.reps}
 						</div>
 					{/each}
-					<button on:click={() => handleClick(exercise)}>Delete</button>
+					<button on:click={() => handleDelete(exercise)}>Delete</button>
 				</section>
 				<img src={exercise.gifUrl} alt={exercise.name} />
 			</li>
