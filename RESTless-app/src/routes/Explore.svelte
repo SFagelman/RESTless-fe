@@ -1,12 +1,9 @@
 <script>
 	import { onMount } from 'svelte';
-	import { fetchAllExercises, fetchAllBodyParts, fetchAllEquipment, fetchAllTargets } from '../api';
+	import { fetchAllExercises } from '../api';
 	import { currentUser, currentWorkout } from '../stores';
 
-	let allExercises = [];
-	let allBodyParts = [];
-	let allTargets = [];
-	let allEquipment = [];
+	let data = [];
 
 	onMount(async () => {
 		const exercises = await fetchAllExercises();
@@ -57,8 +54,6 @@
 		}
 	};
 
-	console.log(selectedBodyPart, selectedEquipment, selectedTarget);
-
 	// if (selectedBodyPart != 'blank') {
 	// 	filteredExercises = filteredExercises.filter((e) => e.bodyPart === selectedBodyPart);
 	// }
@@ -72,7 +67,6 @@
 	// }
 
 	const handleClick = (exercise) => {
-		console.log($currentWorkout);
 		$currentWorkout.exercises.push({
 			...exercise,
 			NumberOfSets: 2,
@@ -90,7 +84,6 @@
 				}
 			]
 		});
-		// console.log($currentWorkout);
 	};
 </script>
 
@@ -99,48 +92,40 @@
 
 	<div class="button-container">
 		<h2 class="filter-title">Filter Exercises</h2>
-
-		<form class="filter-exercises">
+		<div class="filter-exercises">
 			<div>
 				<h3>Body Part</h3>
-				<select class="dropdown" bind:value={selectedBodyPart} on:change={filterByBodyPart}>
-					<option value="blank" />
-					{#each allBodyParts as bodypart}
-						<option value={bodypart.bodyPart}>{bodypart.bodyPart}</option>
-					{/each}
+				<select class="dropdown">
+					<option>Arms</option>
+					<option>Back</option>
+					<option>Shoulder</option>
 				</select>
 			</div>
 			<div>
 				<h3>Target</h3>
-				<select class="dropdown" bind:value={selectedTarget} on:change={filterByTarget}>
-					<option value="blank" />
-
-					{#each allTargets as target}
-						<option value={target.target}>{target.target}</option>
-					{/each}
+				<select class="dropdown">
+					<option>Triceps</option>
+					<option>Traps</option>
+					<option>Pectorals</option>
 				</select>
 			</div>
 			<div>
 				<h3>Equipment</h3>
-				<select class="dropdown" bind:value={selectedEquipment} on:change={filterByEquipment}>
-					<option value="blank" />
-
-					{#each allEquipment as equipment}
-						<option value={equipment.equipment}>{equipment.equipment}</option>
-					{/each}
+				<select class="dropdown">
+					<option>Band</option>
+					<option>Cable</option>
+					<option>Upper Body</option>
 				</select>
 			</div>
-			<input type="reset" />
-		</form>
+		</div>
 
-		<ul class="exercises-list" {filteredExercises}>
-			{#each filteredExercises as exercise}
+		<ul class="exercises-list" {data}>
+			{#each data as exercise}
 				<li>
 					<section>
 						<h3>{exercise.name}</h3>
 						<p>Equipment: {exercise.equipment}</p>
 						<p>Target: {exercise.target}</p>
-
 						{#if $currentUser._id && $currentWorkout.workout_name}
 							<button on:click={() => handleClick(exercise)}> Add to you workout</button>
 						{/if}
@@ -169,14 +154,12 @@
 	.filter-exercises {
 		border: 3px black solid;
 		display: flex;
-		flex-direction: row;
 		justify-content: space-between;
 		padding: 2px;
 	}
 	.dropdown {
 		width: 90px;
 		margin: 2px;
-		text-transform: capitalize;
 	}
 
 	.exercises-list {
