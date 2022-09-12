@@ -1,6 +1,12 @@
 <script>
 	import { onMount } from 'svelte';
-	import { fetchAllExercises, fetchAllBodyParts, fetchAllEquipment, fetchAllTargets } from '../api';
+	import {
+		fetchAllExercises,
+		fetchFilteredExercises,
+		fetchAllBodyParts,
+		fetchAllEquipment,
+		fetchAllTargets
+	} from '../api';
 	import { currentUser, currentWorkout } from '../stores';
 
 	let allExercises = [];
@@ -19,60 +25,36 @@
 		allEquipment = equipment.data;
 	});
 
+	let isLoading = false;
+
 	let selectedBodyPart = 'blank';
 	let selectedTarget = 'blank';
 	let selectedEquipment = 'blank';
 
 	$: filteredExercises = allExercises;
 
-	const filterByBodyPart = () => {
+	const handleFilter = async (event) => {
+		event.preventDefault();
 		filteredExercises = allExercises;
-		filteredExercises = filteredExercises.filter((e) => e.bodyPart === selectedBodyPart);
-		if (selectedTarget != 'blank') {
-			filteredExercises = filteredExercises.filter((e) => e.target === selectedTarget);
-		}
-		if (selectedEquipment != 'blank') {
-			filteredExercises = filteredExercises.filter((e) => e.equipment === selectedEquipment);
-		}
+		isLoading = true;
+		filteredExercises = await fetchFilteredExercises(
+			selectedBodyPart,
+			selectedEquipment,
+			selectedTarget
+		);
+		isLoading = false;
 	};
 
-	const filterByTarget = () => {
+	const handleReset = () => {
+		isLoading = true;
+		selectedBodyPart = 'blank';
+		selectedEquipment = 'blank';
+		selectedTarget = 'blank';
 		filteredExercises = allExercises;
-		filteredExercises = filteredExercises.filter((e) => e.target === selectedTarget);
-		if (selectedBodyPart != 'blank') {
-			filteredExercises = filteredExercises.filter((e) => e.bodyPart === selectedBodyPart);
-		}
-		if (selectedEquipment != 'blank') {
-			filteredExercises = filteredExercises.filter((e) => e.equipment === selectedEquipment);
-		}
+		isLoading = false;
 	};
-	const filterByEquipment = () => {
-		filteredExercises = allExercises;
-		filteredExercises = filteredExercises.filter((e) => e.equipment === selectedEquipment);
-		if (selectedBodyPart != 'blank') {
-			filteredExercises = filteredExercises.filter((e) => e.bodyPart === selectedBodyPart);
-		}
-		if (selectedTarget != 'blank') {
-			filteredExercises = filteredExercises.filter((e) => e.target === selectedTarget);
-		}
-	};
-
-	console.log(selectedBodyPart, selectedEquipment, selectedTarget);
-
-	// if (selectedBodyPart != 'blank') {
-	// 	filteredExercises = filteredExercises.filter((e) => e.bodyPart === selectedBodyPart);
-	// }
-
-	// if (selectedTarget != 'blank') {
-	// 	filteredExercises = filteredExercises.filter((e) => e.target === selectedTarget);
-	// }
-
-	// if (selectedEquipment != 'blank') {
-	// 	filteredExercises = filteredExercises.filter((e) => e.equipment === selectedEquipment);
-	// }
 
 	const handleClick = (exercise) => {
-		console.log($currentWorkout);
 		$currentWorkout.exercises.push({
 			...exercise,
 			NumberOfSets: 2,
@@ -90,7 +72,6 @@
 				}
 			]
 		});
-		// console.log($currentWorkout);
 	};
 </script>
 
@@ -103,7 +84,7 @@
 		<form class="filter-exercises">
 			<div>
 				<h3>Body Part</h3>
-				<select class="dropdown" bind:value={selectedBodyPart} on:change={filterByBodyPart}>
+				<select class="dropdown" bind:value={selectedBodyPart}>
 					<option value="blank" />
 					{#each allBodyParts as bodypart}
 						<option value={bodypart.bodyPart}>{bodypart.bodyPart}</option>
@@ -112,9 +93,8 @@
 			</div>
 			<div>
 				<h3>Target</h3>
-				<select class="dropdown" bind:value={selectedTarget} on:change={filterByTarget}>
+				<select class="dropdown" bind:value={selectedTarget}>
 					<option value="blank" />
-
 					{#each allTargets as target}
 						<option value={target.target}>{target.target}</option>
 					{/each}
@@ -122,7 +102,7 @@
 			</div>
 			<div>
 				<h3>Equipment</h3>
-				<select class="dropdown" bind:value={selectedEquipment} on:change={filterByEquipment}>
+				<select class="dropdown" bind:value={selectedEquipment}>
 					<option value="blank" />
 
 					{#each allEquipment as equipment}
@@ -130,24 +110,30 @@
 					{/each}
 				</select>
 			</div>
-			<input type="reset" />
+			<input type="submit" value="Filter" on:click={handleFilter} />
+			<input type="reset" on:click={handleReset} />
 		</form>
 
 		<ul class="exercises-list" {filteredExercises}>
-			{#each filteredExercises as exercise}
-				<li>
-					<section>
-						<h3>{exercise.name}</h3>
-						<p>Equipment: {exercise.equipment}</p>
-						<p>Target: {exercise.target}</p>
+			{#if filteredExercises.length === 0 && isLoading === false}
+				<p>No exercises match for these filters</p>
+			{:else}
+				{#each filteredExercises as exercise}
+					<li>
+						<section class="exercise-item">
+							<h3>{exercise.name}</h3>
+							<p>Equipment: {exercise.equipment}</p>
+							<p>Body Part: {exercise.bodyPart}</p>
+							<p>Target: {exercise.target}</p>
 
-						{#if $currentUser._id && $currentWorkout.workout_name}
-							<button on:click={() => handleClick(exercise)}> Add to you workout</button>
-						{/if}
-					</section>
-					<img src={exercise.gifUrl} alt={exercise.name} />
-				</li>
-			{/each}
+							{#if $currentUser._id && $currentWorkout.workout_name}
+								<button on:click={() => handleClick(exercise)}> Add to you workout</button>
+							{/if}
+						</section>
+						<img src={exercise.gifUrl} alt={exercise.name} />
+					</li>
+				{/each}
+			{/if}
 		</ul>
 	</div>
 </div>
@@ -183,6 +169,10 @@
 		font-size: 1rem;
 		font-family: 'Courier New', Courier, monospace;
 		list-style: none;
+	}
+
+	.exercise-item {
+		text-transform: capitalize;
 	}
 
 	.exercises-list li {
