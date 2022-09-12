@@ -1,6 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import { fetchAllExercises, fetchAllBodyParts, fetchAllEquipment, fetchAllTargets } from '../api';
+	import { currentUser, currentWorkout } from '../stores';
 
 	let allExercises = [];
 	let allBodyParts = [];
@@ -70,6 +71,28 @@
 	// if (selectedEquipment != 'blank') {
 	// 	filteredExercises = filteredExercises.filter((e) => e.equipment === selectedEquipment);
 	// }
+
+	const handleClick = (exercise) => {
+		console.log($currentWorkout);
+		$currentWorkout.exercises.push({
+			...exercise,
+			NumberOfSets: 2,
+			feedback: '',
+			sets: [
+				{
+					weight: 10,
+					reps: 10,
+					time: 'null'
+				},
+				{
+					weight: 10,
+					reps: 10,
+					time: 'null'
+				}
+			]
+		});
+		console.log($currentWorkout);
+	};
 </script>
 
 <div class="home-container">
@@ -118,6 +141,11 @@
 						<h3>{exercise.name}</h3>
 						<p>Equipment: {exercise.equipment}</p>
 						<p>Target: {exercise.target}</p>
+
+						{#if $currentUser._id && $currentWorkout.workout_name}
+							<button on:click={() => handleClick(exercise)}> Add to you workout</button>
+						{/if}
+
 					</section>
 					<img src={exercise.gifUrl} alt={exercise.name} />
 				</li>

@@ -4,6 +4,7 @@
 	import {currentUser} from './stores.js'
 
 	const form = useForm();
+	let loginError = false;
 	let loginVisible = false;
 	const toggleLoginVisible = () => loginVisible = !loginVisible;
 
@@ -12,7 +13,10 @@
 		const username = event.target[0].value;
 		const password = event.target[1].value;
 		await attemptUserLogin(username,password).then((res)=>{
-			currentUser.set(res);
+			loginError = false;
+			$currentUser = res;
+		}).catch(()=> {
+			loginError = true;
 		});
 	}
 </script>
@@ -30,11 +34,11 @@
 		<Hint for="password" on="required">This is a mandatory field</Hint>
 	  
 		<button disabled={!$form.valid}>Login</button>
+		{#if loginError}
+			<p>Invalid username / password. Please try again.</p>
+		{/if}
 	  </form>
 	  {/if}
-	  <!-- <pre>
-	  {JSON.stringify($form, null, " ")}
-	  </pre> -->
 </section>
 
 <style>
