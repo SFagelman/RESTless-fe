@@ -41,7 +41,6 @@
 		justify-content: center;
 		padding: 2rem 6rem;
 		font-size: 1.8rem;
-		font-family: 'Courier New', Courier, monospace;
 		background: #00adb5;
 		border-color: #eeeeee;
 		border-radius: 12px;

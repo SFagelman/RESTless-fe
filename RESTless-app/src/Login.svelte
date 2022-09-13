@@ -14,6 +14,7 @@
 		const password = event.target[1].value;
 		await attemptUserLogin(username,password).then((res)=>{
 			loginError = false;
+			loginVisible = false;
 			$currentUser = res;
 		}).catch(()=> {
 			loginError = true;
@@ -55,7 +56,6 @@
 		padding: 15px;
 		color: #000000;
 		font-size: 1rem;
-		font-family: 'Courier New', Courier, monospace;
 		border: #eeeeee;
 	}
 </style>

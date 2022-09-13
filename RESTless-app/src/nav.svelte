@@ -1,13 +1,17 @@
 <script>
-import { Link } from "svelte-routing";
+import { link } from "svelte-routing";
+
 import { currentWorkout} from "./stores.js";
 
 $: activeWorkout = currentWorkout;
 </script>
 
 <div class="nav">
-	<Link to="/">RESTless</Link>
-	{$activeWorkout.workout_name}
+	
+	<a href="/" class="link main-panel" use:link>RESTless</a>
+	<p class="sub-panel">
+		{$activeWorkout.workout_name}
+	</p>
 	
 
 </div>
@@ -15,18 +19,21 @@ $: activeWorkout = currentWorkout;
 <style>
 	.nav {
 		display: flex;
+		flex-direction: column;
 		justify-content: center;
 		text-align: center;
 		align-items: center;
-		padding: 15px;
 		color: #00adb5;
 		font-size: 2rem;
-		font-family: 'Courier New', Courier, monospace;
 		border: #eeeeee;
 	}
-	a {
-  color: black;
-  text-decoration: none;
 
-}
+	a {
+		font-size: 3rem;
+	}
+
+	p {
+		font-size: 2rem;
+		text-transform: capitalize;
+	}
 </style>

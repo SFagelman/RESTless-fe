@@ -5,12 +5,43 @@ const backEndClient = axios.create({
 	timeout: 5000
 });
 
-const fetchAllExercises = (topic = null, sort_by = null, order = null) => {
-	if (sort_by === '') {
-		sort_by = null;
+const fetchFilteredExercises = (selectedBodyPart, selectedEquipment, selectedTarget) => {
+	let queryString = '';
+	selectedBodyPart = selectedBodyPart.replace(/ /g, '%20');
+	selectedEquipment = selectedEquipment.replace(/ /g, '%20');
+	selectedTarget = selectedTarget.replace(/ /g, '%20');
+
+	if (selectedBodyPart === 'blank' && selectedEquipment === 'blank' && selectedTarget === 'blank') {
+		queryString = '/api/exercises';
+	} else {
+		queryString = '/api/exercises?';
+	}
+
+	if (selectedBodyPart != 'blank') {
+		queryString += `body_part=${selectedBodyPart}&`;
+	}
+	if (selectedEquipment != 'blank') {
+		queryString += `equipment=${selectedEquipment}&`;
+	}
+	if (selectedTarget != 'blank') {
+		queryString += `target=${selectedTarget}&`;
+	}
+	if (queryString[queryString.length - 1] === '&') {
+		queryString = queryString.slice(0, -1);
 	}
 	return backEndClient
-		.get('/api/exercises', { params: { sort_by, order, topic } })
+		.get(queryString)
+		.then((res) => {
+			return res.data;
+		})
+		.catch((err) => {
+			return err;
+		});
+};
+
+const fetchAllExercises = () => {
+	return backEndClient
+		.get('/api/exercises')
 		.then((res) => {
 			return res;
 		})
@@ -49,6 +80,18 @@ const fetchAllWorkouts = (username) => {
 			return res;
 		})
 		.catch((err) => {
+			return err;
+		});
+};
+
+const fetchWorkoutPlans = () => {
+	return backEndClient
+		.get('/api/workoutplans')
+		.then((res) => {
+			return res;
+		})
+		.catch((err) => {
+			console.log(err);
 			return err;
 		});
 };
@@ -98,11 +141,13 @@ const fetchAllEquipment = () => {
 };
 
 export {
+	fetchFilteredExercises,
 	fetchAllExercises,
 	attemptUserLogin,
 	postNewWorkout,
 	patchCurrentWorkout,
 	fetchAllWorkouts,
+	fetchWorkoutPlans,
 	fetchAllBodyParts,
 	fetchAllTargets,
 	fetchAllEquipment,
