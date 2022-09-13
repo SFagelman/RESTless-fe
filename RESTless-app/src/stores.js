@@ -2,6 +2,8 @@ import { writable } from 'svelte/store';
 
 export const currentUser = writable({ _id: 'none', user_name: 'None', user_password: 'none' });
 
+export const currentWorkoutTracker = writable({ currentExercise: 0, currentSet: 0 });
+
 export const currentWorkout = writable({
 	workout_name: 'full body',
 	user_name: 'Justin',
