@@ -1,16 +1,35 @@
 <script>
-import {currentWorkout} from "../stores"
+import {currentWorkout, currentWorkoutTracker} from "../stores"
 
   let isPaused = false
-  let countdown = $currentWorkout.rest_timer
+  let countdown = 5
+  // $currentWorkout.rest_timer
   let toggle = true
   let timer;
   $: {
     if (countdown === 0) {
-      if (timer) {
-        clearInterval(timer);
-        timer = null;
-      }
+      console.log($currentWorkoutTracker.currentSet +1,"<<<<<<<1" );
+      console.log($currentWorkout.exercises[$currentWorkoutTracker.currentExercise].NumberOfSets,"sets");
+      if ($currentWorkoutTracker.currentSet +1 < $currentWorkout.exercises[$currentWorkoutTracker.currentExercise].NumberOfSets) {
+
+
+        if (timer) {
+          console.log($currentWorkoutTracker,"increasing set");
+          $currentWorkoutTracker.currentSet +=1
+          ////// line 19 changes code back to default timer.. should pull value down not 5
+          countdown = 5 
+         
+        }
+      } else {
+        console.log( $currentWorkoutTracker.currentExercise,"changing workout");
+        $currentWorkoutTracker.currentExercise +=1
+        $currentWorkoutTracker.currentSet = 0
+        countdown = 5 
+         
+        //  clearInterval(timer);
+        //  timer = null;
+       }
+
     }
   }
 function handleClick() {

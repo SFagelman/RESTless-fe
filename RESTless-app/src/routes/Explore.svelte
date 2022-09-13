@@ -6,9 +6,8 @@
 		fetchAllBodyParts,
 		fetchAllEquipment,
 		fetchAllTargets,
-		patchCurrentWorkout
-
-		fetchFilteredExercises,
+		patchCurrentWorkout,
+		fetchFilteredExercises
 		
 		
 		
