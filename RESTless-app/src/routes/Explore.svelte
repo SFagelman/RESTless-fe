@@ -130,7 +130,7 @@
 							<p>Target: {exercise.target}</p>
 
 							{#if $currentUser._id && $currentWorkout.workout_name}
-								<button on:click={() => handleClick(exercise)}> Add to you workout</button>
+								<button on:click={() => handleClick(exercise)}> Add to your workout</button>
 							{/if}
 						</section>
 						<img src={exercise.gifUrl} alt={exercise.name} />

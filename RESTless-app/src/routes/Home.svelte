@@ -12,7 +12,7 @@
 
 <div class="home-container">
 	<h1>Home</h1>
-	<a href="workouts" class="link" use:link>Choose Workout TEST</a>
+	<a href="workouts" class="link" use:link>Choose Workout</a>
 	<a href="explore" class="link" use:link>Explore</a>
 </div>
 
