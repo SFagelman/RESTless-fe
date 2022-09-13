@@ -17,7 +17,6 @@
 			.catch(() => {
 				loadingError = true;
 				isLoading = false;
-				$currentWorkout = $currentWorkout;
 			});
 
 		if (!loadingError) {
@@ -33,6 +32,7 @@
 				}
 			});
 		}
+		$currentWorkout = $currentWorkout;
 	};
 
 	const handleChange = async () => {
@@ -45,8 +45,8 @@
 			.catch(() => {
 				loadingError = true;
 				isLoading = false;
-				$currentWorkout = $currentWorkout;
 			});
+		$currentWorkout = $currentWorkout;
 	};
 
 	const handleDelete = async (exercise) => {
@@ -62,8 +62,8 @@
 			.catch(() => {
 				loadingError = true;
 				isLoading = false;
-				$currentWorkout = $currentWorkout;
 			});
+		$currentWorkout = $currentWorkout;
 	};
 
 	let change = false;
