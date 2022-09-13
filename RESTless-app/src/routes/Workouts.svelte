@@ -1,6 +1,6 @@
 <script>
 import { fetchAllWorkouts, postNewWorkout, fetchWorkoutPlans } from "../api";
-import {currentUser, currentWorkout} from "../stores.js";
+import {currentUser, currentWorkout, currentWorkoutTracker} from "../stores.js";
 import {navigate} from "svelte-routing"
 import { useForm, validators, HintGroup, Hint, required } from "svelte-use-form";
 
@@ -29,6 +29,8 @@ const togglePremadeWorkouts = () => {
 
 const setWorkoutAndRedirect = (workout,route) => {
 	$currentWorkout = workout;
+	$currentWorkoutTracker.currentSet = 0
+	$currentWorkoutTracker.currentExercise = 0
 	navigate(route);
 }
 

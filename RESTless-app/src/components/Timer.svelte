@@ -2,8 +2,7 @@
 import {currentWorkout, currentWorkoutTracker} from "../stores"
 
   let isPaused = false
-  let countdown = 2
-  // $currentWorkout.rest_timer
+  let countdown = $currentWorkout.rest_timer
   let toggle = true
   let timer;
   $: {
@@ -14,13 +13,13 @@ import {currentWorkout, currentWorkoutTracker} from "../stores"
   
           if (timer) {
             $currentWorkoutTracker.currentSet +=1
-            countdown = 2 
+            countdown = $currentWorkout.rest_timer 
            
           }
         } else if($currentWorkoutTracker.currentExercise +1 < $currentWorkout.exercises.length) {
           $currentWorkoutTracker.currentExercise +=1
           $currentWorkoutTracker.currentSet = 0
-          countdown = 2 
+          countdown = $currentWorkout.rest_timer 
           isPaused = !isPaused
            
         } else { 
@@ -57,10 +56,11 @@ function handleClick() {
 <div class="basic">
     {#if toggle}
     <button  on:click|once={handleClick} >Start</button>
-    {:else}	
+    {:else if isPaused}  	
     <button on:click={play}>Resume</button>
-    {/if}
+    {:else}
     <button on:click={pause}>Pause</button>
+    {/if}
 <h1>
     {countdown}
 </h1>
