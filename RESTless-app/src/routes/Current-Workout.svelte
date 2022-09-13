@@ -1,6 +1,6 @@
 <script>
 import Timer from "../components/Timer.svelte";
-import {currentWorkout} from "../stores"
+import {currentWorkout, currentWorkoutTracker} from "../stores"
 
 
 
@@ -9,13 +9,13 @@ import {currentWorkout} from "../stores"
 <div class="workout-container">
 	
 	<section class="current-exercise">
-        <p>Shoulder Press</p>
+        <p>{$currentWorkout.exercises[$currentWorkoutTracker.currentExercise].name}</p>
         <button>Add Exercise</button>
     </section>
     <section class="set-info">
-        <p>Weight: {$currentWorkout.exercises[0].sets[0].weight}kg</p>
-        <p>Reps: {$currentWorkout.exercises[0].sets[0].reps}</p>
-        <p>Set: {$currentWorkout.exercises[0].NumberOfSets}</p>
+        <p>Weight: {$currentWorkout.exercises[$currentWorkoutTracker.currentExercise].sets[$currentWorkoutTracker.currentExercise].weight}kg</p>
+        <p>Reps: {$currentWorkout.exercises[$currentWorkoutTracker.currentExercise].sets[$currentWorkoutTracker.currentExercise].reps}</p>
+        <p>Set: {$currentWorkout.exercises[$currentWorkoutTracker.currentExercise].NumberOfSets}</p>
     </section>
     <section>
         <Timer/>
@@ -27,7 +27,7 @@ import {currentWorkout} from "../stores"
         <p>Feedback</p>
     </section>
     <section>
-        <p>Next Workout: Bench Press</p>
+        <p>Next Exercise: Bench Press</p>
     </section>
 </div>
 
