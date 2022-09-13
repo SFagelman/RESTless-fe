@@ -2,35 +2,33 @@
 import {currentWorkout, currentWorkoutTracker} from "../stores"
 
   let isPaused = false
-  let countdown = 5
+  let countdown = 2
   // $currentWorkout.rest_timer
   let toggle = true
   let timer;
   $: {
     if (countdown === 0) {
-      console.log($currentWorkoutTracker.currentSet +1,"<<<<<<<1" );
-      console.log($currentWorkout.exercises[$currentWorkoutTracker.currentExercise].NumberOfSets,"sets");
-      if ($currentWorkoutTracker.currentSet +1 < $currentWorkout.exercises[$currentWorkoutTracker.currentExercise].NumberOfSets) {
-
-
-        if (timer) {
-          console.log($currentWorkoutTracker,"increasing set");
-          $currentWorkoutTracker.currentSet +=1
-          ////// line 19 changes code back to default timer.. should pull value down not 5
-          countdown = 5 
-         
-        }
-      } else {
-        console.log( $currentWorkoutTracker.currentExercise,"changing workout");
-        $currentWorkoutTracker.currentExercise +=1
-        $currentWorkoutTracker.currentSet = 0
-        countdown = 5 
-         
-        //  clearInterval(timer);
-        //  timer = null;
-       }
-
-    }
+    
+        if ($currentWorkoutTracker.currentSet +1 < $currentWorkout.exercises[$currentWorkoutTracker.currentExercise].NumberOfSets) {
+  
+  
+          if (timer) {
+            $currentWorkoutTracker.currentSet +=1
+            countdown = 2 
+           
+          }
+        } else if($currentWorkoutTracker.currentExercise +1 < $currentWorkout.exercises.length) {
+          $currentWorkoutTracker.currentExercise +=1
+          $currentWorkoutTracker.currentSet = 0
+          countdown = 2 
+          isPaused = !isPaused
+           
+        } else { 
+          clearInterval(timer); 
+          timer = null; 
+      }
+      
+   }
   }
 function handleClick() {
       toggle = false

@@ -2,16 +2,11 @@
 	import { onMount } from 'svelte';
 	import {
 		fetchAllExercises,
-
 		fetchAllBodyParts,
 		fetchAllEquipment,
 		fetchAllTargets,
 		patchCurrentWorkout,
 		fetchFilteredExercises
-		
-		
-		
-
 	} from '../api';
 	import { currentUser, currentWorkout } from '../stores';
 
@@ -59,7 +54,6 @@
 		filteredExercises = allExercises;
 		isLoading = false;
 	};
-
 
 	const handleClick = (exercise) => {
 		$currentWorkout.exercises.push({
@@ -124,7 +118,6 @@
 		</form>
 
 		<ul class="exercises-list" {filteredExercises}>
-
 			{#if filteredExercises.length === 0 && isLoading === false}
 				<p>No exercises match for these filters</p>
 			{:else}
@@ -137,14 +130,13 @@
 							<p>Target: {exercise.target}</p>
 
 							{#if $currentUser._id && $currentWorkout.workout_name}
-								<button on:click={() => handleClick(exercise)}> Add to you workout</button>
+								<button on:click={() => handleClick(exercise)}> Add to your workout</button>
 							{/if}
 						</section>
 						<img src={exercise.gifUrl} alt={exercise.name} />
 					</li>
 				{/each}
 			{/if}
-
 		</ul>
 	</div>
 </div>
