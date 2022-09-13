@@ -2,10 +2,17 @@
 	import { onMount } from 'svelte';
 	import {
 		fetchAllExercises,
-		fetchFilteredExercises,
+
 		fetchAllBodyParts,
 		fetchAllEquipment,
-		fetchAllTargets
+		fetchAllTargets,
+		patchCurrentWorkout
+
+		fetchFilteredExercises,
+		
+		
+		
+
 	} from '../api';
 	import { currentUser, currentWorkout } from '../stores';
 
@@ -54,6 +61,7 @@
 		isLoading = false;
 	};
 
+
 	const handleClick = (exercise) => {
 		$currentWorkout.exercises.push({
 			...exercise,
@@ -72,6 +80,8 @@
 				}
 			]
 		});
+		patchCurrentWorkout($currentWorkout, $currentUser.user_name);
+		$currentWorkout = $currentWorkout;
 	};
 </script>
 
@@ -115,6 +125,7 @@
 		</form>
 
 		<ul class="exercises-list" {filteredExercises}>
+
 			{#if filteredExercises.length === 0 && isLoading === false}
 				<p>No exercises match for these filters</p>
 			{:else}
@@ -134,6 +145,7 @@
 					</li>
 				{/each}
 			{/if}
+
 		</ul>
 	</div>
 </div>

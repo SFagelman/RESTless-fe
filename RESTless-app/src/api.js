@@ -67,6 +67,12 @@ const postNewWorkout = (workoutName, userName, restTimer) => {
 	});
 };
 
+const patchCurrentWorkout = (currentWorkout, userName) => {
+	return backEndClient.patch(`/api/workouts/${userName}`, currentWorkout).then((res) => {
+		return res;
+	});
+};
+
 const fetchAllWorkouts = (username) => {
 	return backEndClient
 		.get(`/api/workouts/${username}`)
@@ -139,6 +145,7 @@ export {
 	fetchAllExercises,
 	attemptUserLogin,
 	postNewWorkout,
+	patchCurrentWorkout,
 	fetchAllWorkouts,
 	fetchWorkoutPlans,
 	fetchAllBodyParts,
