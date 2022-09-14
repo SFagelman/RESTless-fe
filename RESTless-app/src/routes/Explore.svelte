@@ -15,8 +15,7 @@
 	let allTargets = [];
 	let allEquipment = [];
 
-	$: currentExerciseList = currentExerciseList;
-	const currentExerciseList = $currentWorkout.exercises.map((elem) => elem._id);
+	$: currentExerciseList = $currentWorkout.exercises.map((elem) => elem._id);
 
 	onMount(async () => {
 		const exercises = await fetchAllExercises();
