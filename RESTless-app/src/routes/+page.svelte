@@ -28,36 +28,43 @@
 </div>
 
 <style>
+	@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+
 	:global(*) {
 		margin: 0;
 		padding: 0;
 		box-sizing: border-box;
 		text-align: center;
-		font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial,
-			sans-serif;
+		font-family: 'Raleway', sans-serif;
+		text-shadow: 0 2px 3px rgba(0, 0, 0, 0.4);
 	}
 
 	.home-container {
 		justify-content: center;
-		background: whitesmoke;
-		min-height: 100vh;
-		padding: 5vw;
+		background-position: center;
+		padding: 3vw;
+		width: 360px;
+		height: 740px;
+		background-color: #ffffff;
+		background-image: url('../diamond-upholstery.png');
 	}
 
 	:global(.main-panel) {
-		color: white;
-		background-color: red;
+		color: lightgrey;
+		background-color: rgb(143, 52, 52);
 		text-decoration: none;
 		width: 100%;
 		padding: 0.5rem;
+		border-radius: 0.3cm;
 	}
 
 	:global(.sub-panel) {
 		color: black;
 		background-color: lightgrey;
 		text-decoration: none;
-		width: 100%;
-		padding: 0.5rem;
+		width: 80%;
+		padding: 0.3rem;
+		border-radius: 0.9cm;
 	}
 
 	:global(.panel) {
@@ -66,11 +73,15 @@
 		justify-content: center;
 		align-items: center;
 		color: white;
-		background-color: red;
+		background-color: #8f3434;
+		border-radius: 4px;
 		text-decoration: none;
+		text-transform: capitalize;
 		width: 100%;
 		padding: 0.5rem;
-		margin-top: 0.5rem;
+		margin-bottom: 0.5rem;
+		border: 2px solid #000000;
+		border-radius: 0.3cm;
 	}
 
 	:global(button) {
@@ -78,5 +89,19 @@
 		padding: 0.5rem;
 		color: black;
 		font-size: 1rem;
+	}
+
+	:global(*::-webkit-scrollbar) {
+		width: 10px;
+	}
+
+	:global(*::-webkit-scrollbar-track) {
+		background: rgb(100, 100, 100);
+		border-radius: 10px;
+	}
+
+	:global(*::-webkit-scrollbar-thumb) {
+		background-color: #8f3434;
+		border-radius: 30px;
 	}
 </style>

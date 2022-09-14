@@ -78,44 +78,49 @@
 	};
 </script>
 
-<div class="home-container">
+<div class="explore-container">
 	<h1>Explore</h1>
 
 	<div class="button-container">
-		<h2 class="filter-title">Filter Exercises</h2>
+		<h2 class="filter-title">Filter Exercises By:</h2>
+		<div class="filter-exercises">
+			<form class="filter-form">
+				<div class="dropdowns">
+					<div>
+						<h3>Body Part</h3>
+						<select class="dropdown" bind:value={selectedBodyPart}>
+							<option value="blank" />
+							{#each allBodyParts as bodypart}
+								<option value={bodypart.bodyPart}>{bodypart.bodyPart}</option>
+							{/each}
+						</select>
+					</div>
+					<div>
+						<h3>Target</h3>
+						<select class="dropdown" bind:value={selectedTarget}>
+							<option value="blank" />
+							{#each allTargets as target}
+								<option value={target.target}>{target.target}</option>
+							{/each}
+						</select>
+					</div>
+					<div>
+						<h3>Equipment</h3>
+						<select class="dropdown" bind:value={selectedEquipment}>
+							<option value="blank" />
 
-		<form class="filter-exercises">
-			<div>
-				<h3>Body Part</h3>
-				<select class="dropdown" bind:value={selectedBodyPart}>
-					<option value="blank" />
-					{#each allBodyParts as bodypart}
-						<option value={bodypart.bodyPart}>{bodypart.bodyPart}</option>
-					{/each}
-				</select>
-			</div>
-			<div>
-				<h3>Target</h3>
-				<select class="dropdown" bind:value={selectedTarget}>
-					<option value="blank" />
-					{#each allTargets as target}
-						<option value={target.target}>{target.target}</option>
-					{/each}
-				</select>
-			</div>
-			<div>
-				<h3>Equipment</h3>
-				<select class="dropdown" bind:value={selectedEquipment}>
-					<option value="blank" />
-
-					{#each allEquipment as equipment}
-						<option value={equipment.equipment}>{equipment.equipment}</option>
-					{/each}
-				</select>
-			</div>
-			<input type="submit" value="Filter" on:click={handleFilter} />
-			<input type="reset" on:click={handleReset} />
-		</form>
+							{#each allEquipment as equipment}
+								<option value={equipment.equipment}>{equipment.equipment}</option>
+							{/each}
+						</select>
+					</div>
+				</div>
+				<div class="buttons">
+					<input class="filter-button" type="submit" value="Filter" on:click={handleFilter} />
+					<input class="reset-button" type="reset" on:click={handleReset} />
+				</div>
+			</form>
+		</div>
 
 		<ul class="exercises-list" {filteredExercises}>
 			{#if filteredExercises.length === 0 && isLoading === false}
@@ -147,20 +152,31 @@
 		padding: 0;
 		box-sizing: border-box;
 	}
-	.home-container {
+	.explore-container {
 		justify-content: center;
-		background: grey;
-		min-height: 100vh;
 	}
+
 	.filter-title {
-		text-align: center;
+		text-align: left;
+		font-size: 16px;
+		padding: 8px;
 	}
 	.filter-exercises {
-		border: 3px black solid;
 		display: flex;
 		flex-direction: row;
-		justify-content: space-between;
-		padding: 2px;
+		justify-content: center;
+		padding: 6px;
+		margin: 3px;
+	}
+
+	.filter-form {
+		display: flex;
+		flex-direction: column;
+	}
+	.dropdowns {
+		display: flex;
+		flex-direction: row;
+		font-size: 15px;
 	}
 	.dropdown {
 		width: 90px;
@@ -171,17 +187,33 @@
 	.exercises-list {
 		font-size: 1rem;
 		list-style: none;
+		height: 410px;
+		overflow-y: scroll;
+		/* border: 1px dashed; */
+		border-radius: 0.1cm;
+		/* margin: px; */
 	}
 
 	.exercise-item {
 		text-transform: capitalize;
+		width: 200px;
+		padding: 10px;
+		font-size: 15px;
+		/* background-color: #8f3434; */
+		color: #ffffff;
 	}
 
 	.exercises-list li {
-		border: 3px black solid;
+		/* border: 3px black solid; */
 		display: flex;
 		justify-content: space-between;
-		margin: 10px;
+		margin-top: 0px;
+		margin-bottom: 10px;
+		margin-left: 10px;
+		margin-right: 10px;
+		border: 2px solid;
+		border-radius: 0.3cm;
+		background-color: #8f3434;
 	}
 	.exercises-list section {
 		display: flex;
@@ -189,7 +221,21 @@
 	}
 
 	.exercises-list li img {
-		width: 100px;
-		padding-bottom: 2px;
+		width: 130px;
+		padding: 5px;
+		border-radius: 0cm 0.3cm 0.3cm 0cm;
+	}
+
+	p {
+		padding-top: 3px;
+		padding-bottom: 3px;
+	}
+
+	button {
+		padding: 1px;
+	}
+
+	input {
+		padding: 2px;
 	}
 </style>
