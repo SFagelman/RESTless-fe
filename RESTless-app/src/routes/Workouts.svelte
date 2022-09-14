@@ -1,45 +1,48 @@
 <script>
-	import { fetchAllWorkouts, postNewWorkout, fetchWorkoutPlans } from '../api';
-	import { currentUser, currentWorkout } from '../stores.js';
-	import { navigate } from 'svelte-routing';
-	import { useForm, validators, HintGroup, Hint, required } from 'svelte-use-form';
+import { fetchAllWorkouts, postNewWorkout, fetchWorkoutPlans } from "../api";
+import {currentUser, currentWorkout, currentWorkoutTracker} from "../stores.js";
+import {navigate} from "svelte-routing"
+import { useForm, validators, HintGroup, Hint, required } from "svelte-use-form";
 
-	$: data = fetchAllWorkouts($currentUser.user_name).then((result) => {
-		if (result.data.workouts) {
-			return result.data.workouts;
-		} else {
-			return [];
-		}
-	});
 
-	$: plansData = fetchWorkoutPlans().then((result) => {
-		return result.data.workoutPlans;
-	});
+$: data = fetchAllWorkouts($currentUser.user_name).then((result) => {
+	if(result.data.workouts){
+		return result.data.workouts;
+	} else {
+		return [];
+	}
+})
 
-	let premadeWorkoutsVisible = 'Show';
+$: plansData = fetchWorkoutPlans().then((result) => {
+	return result.data.workoutPlans;
+})
 
-	const togglePremadeWorkouts = () => {
-		if (premadeWorkoutsVisible === 'Show') {
-			premadeWorkoutsVisible = 'Hide';
-		} else {
-			premadeWorkoutsVisible = 'Show';
-		}
-	};
+let premadeWorkoutsVisible = "Show";
 
-	const setWorkoutAndRedirect = (workout, route) => {
-		$currentWorkout = workout;
-		navigate(route);
-	};
+const togglePremadeWorkouts = () => {
+	if(premadeWorkoutsVisible === "Show"){
+		premadeWorkoutsVisible = "Hide";
+	} else {
+		premadeWorkoutsVisible = "Show";
+	}
+}
 
-	let newWorkoutPanel = false;
-	const showHideNewWorkout = () => {
-		newWorkoutPanel = !newWorkoutPanel;
-	};
+const setWorkoutAndRedirect = (workout,route) => {
+	$currentWorkout = workout;
+	$currentWorkoutTracker.currentSet = 0
+	$currentWorkoutTracker.currentExercise = 0
+	navigate(route);
+}
 
-	const form = useForm();
-	let postWorkoutError = false;
+let newWorkoutPanel = false;
+const showHideNewWorkout = () => {
+	newWorkoutPanel = !newWorkoutPanel;
+}
 
-	const handleOnSubmit = async (event) => {
+const form = useForm();
+let postWorkoutError = false;
+
+const handleOnSubmit = async (event) => {
 		event.preventDefault();
 		const workoutName = event.target[0].value;
 		const userName = $currentUser.user_name;

@@ -15,6 +15,9 @@
 	let allTargets = [];
 	let allEquipment = [];
 
+	$: currentExerciseList = currentExerciseList;
+	const currentExerciseList = $currentWorkout.exercises.map((elem) => elem._id);
+
 	onMount(async () => {
 		const exercises = await fetchAllExercises();
 		const bodyparts = await fetchAllBodyParts();
@@ -74,6 +77,8 @@
 			]
 		});
 		patchCurrentWorkout($currentWorkout, $currentUser.user_name);
+		currentExerciseList.push(exercise._id);
+		currentExerciseList = currentExerciseList;
 		$currentWorkout = $currentWorkout;
 	};
 </script>
@@ -135,7 +140,11 @@
 							<p>Target: {exercise.target}</p>
 
 							{#if $currentUser._id && $currentWorkout.workout_name}
-								<button on:click={() => handleClick(exercise)}> Add to your workout</button>
+								{#if !currentExerciseList.includes(exercise._id)}
+									<button on:click={() => handleClick(exercise)}> Add to your workout</button>
+								{:else}
+									<p>> In your workout</p>
+								{/if}
 							{/if}
 						</section>
 						<img src={exercise.gifUrl} alt={exercise.name} />

@@ -13,9 +13,9 @@ import {currentWorkout, currentWorkoutTracker} from "../stores"
         <button>Add Exercise</button>
     </section>
     <section class="set-info">
-        <p>Weight: {$currentWorkout.exercises[$currentWorkoutTracker.currentExercise].sets[$currentWorkoutTracker.currentExercise].weight}kg</p>
-        <p>Reps: {$currentWorkout.exercises[$currentWorkoutTracker.currentExercise].sets[$currentWorkoutTracker.currentExercise].reps}</p>
-        <p>Set: {$currentWorkout.exercises[$currentWorkoutTracker.currentExercise].NumberOfSets}</p>
+        <p>Weight: {$currentWorkout.exercises[$currentWorkoutTracker.currentExercise].sets[$currentWorkoutTracker.currentSet].weight}kg</p>
+        <p>Reps: {$currentWorkout.exercises[$currentWorkoutTracker.currentExercise].sets[$currentWorkoutTracker.currentSet].reps}</p>
+        <p>Set: {$currentWorkoutTracker.currentSet +1}/{$currentWorkout.exercises[$currentWorkoutTracker.currentExercise].NumberOfSets}</p>
     </section>
     <section>
         <Timer/>
@@ -27,7 +27,13 @@ import {currentWorkout, currentWorkoutTracker} from "../stores"
         <p>Feedback</p>
     </section>
     <section>
-        <p>Next Exercise: Bench Press</p>
+        {#if 
+        $currentWorkout.exercises[$currentWorkoutTracker.currentExercise+1] !== undefined
+        }
+        <p>Next Exercise: {$currentWorkout.exercises[$currentWorkoutTracker.currentExercise+1].name}</p>
+        {:else}
+        <p>Last Exercise</p>
+        {/if}
     </section>
 </div>
 

@@ -1,5 +1,5 @@
 <script>
-import {currentWorkout} from "../stores"
+import {currentWorkout, currentWorkoutTracker} from "../stores"
 
   let isPaused = false
   let countdown = $currentWorkout.rest_timer
@@ -7,11 +7,27 @@ import {currentWorkout} from "../stores"
   let timer;
   $: {
     if (countdown === 0) {
-      if (timer) {
-        clearInterval(timer);
-        timer = null;
+    
+        if ($currentWorkoutTracker.currentSet +1 < $currentWorkout.exercises[$currentWorkoutTracker.currentExercise].NumberOfSets) {
+  
+  
+          if (timer) {
+            $currentWorkoutTracker.currentSet +=1
+            countdown = $currentWorkout.rest_timer 
+           
+          }
+        } else if($currentWorkoutTracker.currentExercise +1 < $currentWorkout.exercises.length) {
+          $currentWorkoutTracker.currentExercise +=1
+          $currentWorkoutTracker.currentSet = 0
+          countdown = $currentWorkout.rest_timer 
+          isPaused = !isPaused
+           
+        } else { 
+          clearInterval(timer); 
+          timer = null; 
       }
-    }
+      
+   }
   }
 function handleClick() {
       toggle = false
@@ -40,10 +56,11 @@ function handleClick() {
 <div class="basic">
     {#if toggle}
     <button  on:click|once={handleClick} >Start</button>
-    {:else}	
+    {:else if isPaused}  	
     <button on:click={play}>Resume</button>
-    {/if}
+    {:else}
     <button on:click={pause}>Pause</button>
+    {/if}
 <h1>
     {countdown}
 </h1>
