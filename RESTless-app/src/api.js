@@ -68,7 +68,6 @@ const postNewWorkout = (workoutName, userName, restTimer) => {
 };
 
 const deleteWorkout = (workoutName, userName) => {
-	console.log(workoutName);
 	return backEndClient
 		.delete(`/api/workouts/${userName}`, { data: { workout_name: workoutName } })
 		.then((res) => {
