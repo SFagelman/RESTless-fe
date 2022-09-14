@@ -33,12 +33,17 @@
 		navigate(route);
 	};
 
-	const deleteWorkoutAndRedirect = async (workout, route) => {
-		console.log(workout.workout_name);
-		await deleteWorkout(workout.workout_name, workout.user_name).then(() => {
-			console.log(res);
-		});
-		navigate(route);
+	let isDeleting = false;
+	const deleteWorkoutAndRedirect = async (workout) => {
+		isDeleting = true;
+		await deleteWorkout(workout.workout_name, workout.user_name)
+			.then(() => {
+				isDeleting = false;
+			})
+			.catch(() => {
+				isDeleting = false;
+			});
+		data = data;
 	};
 
 	let newWorkoutPanel = false;
@@ -88,9 +93,9 @@
 								>
 								<button on:click={() => setWorkoutAndRedirect(workout, 'edit-workout')}>Edit</button
 								>
-								<button on:click={() => deleteWorkoutAndRedirect(workout, 'workouts')}
-									>Delete</button
-								>
+								{#if !isDeleting}
+									<button on:click={() => deleteWorkoutAndRedirect(workout)}>Delete</button>
+								{/if}
 							</section>
 						</li>
 					{/each}
@@ -117,9 +122,11 @@
 								>
 								<button on:click={() => setWorkoutAndRedirect(workout, 'edit-workout')}>Edit</button
 								>
-								<button on:click={() => deleteWorkoutAndRedirect(workout, 'workouts')}
-									>Delete</button
-								>
+								{#if !isDeleting}
+									<button on:click={() => deleteWorkoutAndRedirect(workout, 'workouts')}
+										>Delete</button
+									>
+								{/if}
 							</section>
 						</li>
 					{/each}
@@ -167,7 +174,7 @@
 		flex-direction: column;
 		align-items: center;
 		height: 450px;
-		overflow-y: scroll;
+		overflow-y: auto;
 		overflow-x: hidden;
 	}
 
@@ -178,6 +185,10 @@
 
 	.main-panel {
 		width: 95%;
+	}
+
+	.sub-panel {
+		width: 90%;
 	}
 
 	.premade-workout-list {
