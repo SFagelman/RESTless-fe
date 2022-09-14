@@ -142,7 +142,7 @@
 								{#if !currentExerciseList.includes(exercise._id)}
 									<button on:click={() => handleClick(exercise)}> Add to your workout</button>
 								{:else}
-									<p>> In your workout</p>
+									<p>> Already in your workout</p>
 								{/if}
 							{/if}
 						</section>
