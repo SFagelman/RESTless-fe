@@ -24,24 +24,26 @@
 	}
 	.home-container {
 		justify-content: center;
-		background: grey;
-		min-height: 100vh;
-		border: 2px solid red;
 	}
 	.home-container h1 {
-		border: 2px solid green;
 		text-decoration: none;
 	}
 
-	.link {
+	.link,
+	.link:visited {
 		display: flex;
 		justify-content: center;
-		padding: 2rem 6rem;
+		padding: 3rem 3rem;
 		font-size: 1.8rem;
-		background: #00adb5;
+		/* background: #d3d3d3; */
+		background: #8f3434;
 		border-color: #eeeeee;
 		border-radius: 12px;
 		margin: 15px 0px;
 		width: 100%;
+		word-break: keep;
+		text-decoration: none;
+		/* color: #8f3434; */
+		color: #d3d3d3;
 	}
 </style>
