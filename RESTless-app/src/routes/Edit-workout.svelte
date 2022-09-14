@@ -152,12 +152,15 @@
 		margin: 0;
 		padding: 0;
 		box-sizing: border-box;
+		max-width: 360px;
+		/* overflow-y: hidden; */
 	}
 	.home-container {
 		justify-content: center;
+		width: 320px;
+		/* overflow: auto; */
 		/* background: grey; */
 		/* height: 500px; */
-		/* max-width: 300px; */
 		/* padding: 0px; */
 	}
 
@@ -173,6 +176,7 @@
 		font-size: 1rem;
 		list-style: none;
 		color: #ffffff;
+		/* overflow-y: scroll; */
 	}
 
 	.exercises-list li {
