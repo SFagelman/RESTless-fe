@@ -74,8 +74,9 @@
 </script>
 
 <div class="home-container">
-	<h1>{$currentWorkout.workout_name} workout!</h1>
-	<p>Rest time: {$currentWorkout.rest_timer} sec.</p>
+	<!-- <h1>{$currentWorkout.workout_name} workout</h1> -->
+	<button on:click={toggleChange}>Edit</button>
+	<p class="rest-time">Rest time: {$currentWorkout.rest_timer} sec.</p>
 	{#if change && !isLoading}
 		<input
 			on:change={() => handleChange()}
@@ -85,7 +86,6 @@
 			max="300"
 		/>
 	{/if}
-	<button on:click={toggleChange}>Edit</button>
 	{#if change}
 		<a href="explore" class="link" use:link>Add exercises</a>
 	{/if}
@@ -111,7 +111,7 @@
 					{/if}
 					{#each exercise.sets as set}
 						<p>
-							{exercise.sets.indexOf(set) + 1}. set: weight: {set.weight}kg Reps: {set.reps}
+							Set {exercise.sets.indexOf(set) + 1}: weight: {set.weight}kg Reps: {set.reps}
 						</p>
 						{#if change && !isLoading}
 							Modify Weight:
@@ -150,28 +150,61 @@
 	}
 	.home-container {
 		justify-content: center;
-		background: grey;
-		min-height: 100vh;
+		/* background: grey; */
+		/* height: 500px; */
+		/* max-width: 300px; */
+		/* padding: 0px; */
+	}
+
+	.rest-time {
+		margin: 8px auto;
+		width: 150px;
+		border-radius: 0.1cm;
+		border: 2px solid #8f3434;
+		justify-content: space-around;
 	}
 
 	.exercises-list {
 		font-size: 1rem;
 		list-style: none;
+		color: #ffffff;
 	}
 
 	.exercises-list li {
-		border: 3px black solid;
+		border: 2px black solid;
+		border-radius: 0.3cm;
+		background-color: #8f3434;
 		display: flex;
-		justify-content: space-between;
-		margin: 10px;
+		flex-direction: column;
+		justify-content: space-around;
+		margin: 0px;
+		margin-bottom: 10px;
+		padding: 4px;
 	}
 	.exercises-list section {
 		display: flex;
 		flex-direction: column;
+		align-self: center;
+		justify-self: center;
 	}
 
-	.exercises-list li img {
+	.exercises-list p {
+		padding: 3px 0;
+	}
+
+	/* .exercises-list li img {
 		width: 100px;
-		padding-bottom: 2px;
+		height: 150px;
+		align-self: center;
+		padding: 5px;
+		border-radius: 0.3cm;
+	} */
+
+	.exercises-list li img {
+		width: 150px;
+		height: 150px;
+		align-self: center;
+		padding: 5px;
+		border-radius: 0.3cm;
 	}
 </style>

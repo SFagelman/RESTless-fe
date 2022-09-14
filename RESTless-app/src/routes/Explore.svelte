@@ -15,8 +15,7 @@
 	let allTargets = [];
 	let allEquipment = [];
 
-	$: currentExerciseList = currentExerciseList;
-	const currentExerciseList = $currentWorkout.exercises.map((elem) => elem._id);
+	$: currentExerciseList = $currentWorkout.exercises.map((elem) => elem._id);
 
 	onMount(async () => {
 		const exercises = await fetchAllExercises();
@@ -143,7 +142,7 @@
 								{#if !currentExerciseList.includes(exercise._id)}
 									<button on:click={() => handleClick(exercise)}> Add to your workout</button>
 								{:else}
-									<p>> In your workout</p>
+									<p>> Already in your workout</p>
 								{/if}
 							{/if}
 						</section>

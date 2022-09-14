@@ -43,7 +43,7 @@
 		justify-content: center;
 		background-position: center;
 		padding: 3vw;
-		width: 360px;
+		width: 350px;
 		height: 740px;
 		background-color: #ffffff;
 		background-image: url('../diamond-upholstery.png');
