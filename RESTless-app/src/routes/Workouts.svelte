@@ -1,48 +1,55 @@
 <script>
-import { fetchAllWorkouts, postNewWorkout, fetchWorkoutPlans } from "../api";
-import {currentUser, currentWorkout, currentWorkoutTracker} from "../stores.js";
-import {navigate} from "svelte-routing"
-import { useForm, validators, HintGroup, Hint, required } from "svelte-use-form";
+	import { fetchAllWorkouts, postNewWorkout, fetchWorkoutPlans, deleteWorkout } from '../api';
+	import { currentUser, currentWorkout, currentWorkoutTracker } from '../stores.js';
+	import { navigate } from 'svelte-routing';
+	import { useForm, validators, HintGroup, Hint, required } from 'svelte-use-form';
 
+	$: data = fetchAllWorkouts($currentUser.user_name).then((result) => {
+		if (result.data.workouts) {
+			return result.data.workouts;
+		} else {
+			return [];
+		}
+	});
 
-$: data = fetchAllWorkouts($currentUser.user_name).then((result) => {
-	if(result.data.workouts){
-		return result.data.workouts;
-	} else {
-		return [];
-	}
-})
+	$: plansData = fetchWorkoutPlans().then((result) => {
+		return result.data.workoutPlans;
+	});
 
-$: plansData = fetchWorkoutPlans().then((result) => {
-	return result.data.workoutPlans;
-})
+	let premadeWorkoutsVisible = 'Show';
 
-let premadeWorkoutsVisible = "Show";
+	const togglePremadeWorkouts = () => {
+		if (premadeWorkoutsVisible === 'Show') {
+			premadeWorkoutsVisible = 'Hide';
+		} else {
+			premadeWorkoutsVisible = 'Show';
+		}
+	};
 
-const togglePremadeWorkouts = () => {
-	if(premadeWorkoutsVisible === "Show"){
-		premadeWorkoutsVisible = "Hide";
-	} else {
-		premadeWorkoutsVisible = "Show";
-	}
-}
+	const setWorkoutAndRedirect = (workout, route) => {
+		$currentWorkout = workout;
+		$currentWorkoutTracker.currentSet = 0;
+		$currentWorkoutTracker.currentExercise = 0;
+		navigate(route);
+	};
 
-const setWorkoutAndRedirect = (workout,route) => {
-	$currentWorkout = workout;
-	$currentWorkoutTracker.currentSet = 0
-	$currentWorkoutTracker.currentExercise = 0
-	navigate(route);
-}
+	const deleteWorkoutAndRedirect = async (workout, route) => {
+		console.log(workout.workout_name);
+		await deleteWorkout(workout.workout_name, workout.user_name).then(() => {
+			console.log(res);
+		});
+		navigate(route);
+	};
 
-let newWorkoutPanel = false;
-const showHideNewWorkout = () => {
-	newWorkoutPanel = !newWorkoutPanel;
-}
+	let newWorkoutPanel = false;
+	const showHideNewWorkout = () => {
+		newWorkoutPanel = !newWorkoutPanel;
+	};
 
-const form = useForm();
-let postWorkoutError = false;
+	const form = useForm();
+	let postWorkoutError = false;
 
-const handleOnSubmit = async (event) => {
+	const handleOnSubmit = async (event) => {
 		event.preventDefault();
 		const workoutName = event.target[0].value;
 		const userName = $currentUser.user_name;
@@ -81,6 +88,9 @@ const handleOnSubmit = async (event) => {
 								>
 								<button on:click={() => setWorkoutAndRedirect(workout, 'edit-workout')}>Edit</button
 								>
+								<button on:click={() => deleteWorkoutAndRedirect(workout, 'workouts')}
+									>Delete</button
+								>
 							</section>
 						</li>
 					{/each}
@@ -106,6 +116,9 @@ const handleOnSubmit = async (event) => {
 									>Select</button
 								>
 								<button on:click={() => setWorkoutAndRedirect(workout, 'edit-workout')}>Edit</button
+								>
+								<button on:click={() => deleteWorkoutAndRedirect(workout, 'workouts')}
+									>Delete</button
 								>
 							</section>
 						</li>
