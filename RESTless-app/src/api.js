@@ -67,6 +67,18 @@ const postNewWorkout = (workoutName, userName, restTimer) => {
 	});
 };
 
+const deleteWorkout = (workoutName, userName) => {
+	console.log(workoutName);
+	return backEndClient
+		.delete(`/api/workouts/${userName}`, { data: { workout_name: workoutName } })
+		.then((res) => {
+			return res;
+		})
+		.catch((err) => {
+			return err;
+		});
+};
+
 const patchCurrentWorkout = (currentWorkout, userName) => {
 	return backEndClient.patch(`/api/workouts/${userName}`, currentWorkout).then((res) => {
 		return res;
@@ -151,5 +163,6 @@ export {
 	fetchAllBodyParts,
 	fetchAllTargets,
 	fetchAllEquipment,
-	fetchExerciseById
+	fetchExerciseById,
+	deleteWorkout
 };
