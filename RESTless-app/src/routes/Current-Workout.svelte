@@ -1,12 +1,18 @@
 <script>
 	import Timer from '../components/Timer.svelte';
 	import { currentWorkout, currentWorkoutTracker } from '../stores';
+    import { navigate } from 'svelte-routing';
+
+    const navToExercise = () => {
+		navigate('edit-workout');
+	};
+    
 </script>
 
 <div class="workout-container">
 	<section class="current-exercise">
 		<p>{$currentWorkout.exercises[$currentWorkoutTracker.currentExercise].name}</p>
-		<button>Add Exercise</button>
+		<button on:click={() => navToExercise()}>Edit Exercise</button>
 	</section>
 	<section class="set-info">
 		<p>

@@ -1,6 +1,6 @@
 <script>
 	import { patchCurrentWorkout } from '../api.js';
-	import { link } from 'svelte-routing';
+	import { link, navigate } from 'svelte-routing';
 	import { currentWorkout, currentUser } from '../stores.js';
 
 	let isLoading = false;
@@ -71,10 +71,15 @@
 		isLoading = false;
 		change = !change;
 	};
+
+	const navToWorkout = () => {
+		navigate('current-workout');
+	};
 </script>
 
 <div class="home-container">
 	<!-- <h1>{$currentWorkout.workout_name} workout</h1> -->
+	<button on:click={() => navToWorkout()}>Back to Workout</button>
 	<button on:click={toggleChange}>Edit</button>
 	<p class="rest-time">Rest time: {$currentWorkout.rest_timer} sec.</p>
 	{#if change && !isLoading}
