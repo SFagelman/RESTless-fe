@@ -5,6 +5,7 @@
 	let countdown = $currentWorkout.rest_timer;
 	let toggle = true;
 	let timer;
+	let endOfSets = false;
 	$: {
 		if (countdown === 0) {
 			if (
@@ -14,12 +15,15 @@
 				if (timer) {
 					$currentWorkoutTracker.currentSet += 1;
 					countdown = $currentWorkout.rest_timer;
+					isPaused = !isPaused;
 				}
 			} else if ($currentWorkoutTracker.currentExercise + 1 < $currentWorkout.exercises.length) {
-				$currentWorkoutTracker.currentExercise += 1;
+				$currentWorkoutTracker.currentExercise += 1; //this will change the exercise - set to go AFTER feedback
 				$currentWorkoutTracker.currentSet = 0;
 				countdown = $currentWorkout.rest_timer;
 				isPaused = !isPaused;
+				endOfSets = true;
+				//request feedback at this point
 			} else {
 				clearInterval(timer);
 				timer = null;
@@ -43,11 +47,11 @@
 
 <div class="basic">
 	{#if toggle}
-		<button on:click|once={handleClick}>Finished Set</button>
+		<button class="timer-button" on:click|once={handleClick}>Start</button>
 	{:else if isPaused}
-		<button on:click={play}>Resume</button>
+		<button class="timer-button" on:click={play}>Resume</button>
 	{:else}
-		<button on:click={pause}>Pause</button>
+		<button class="timer-button" on:click={pause}>Pause</button>
 	{/if}
 	<h1>
 		{countdown}
@@ -55,4 +59,14 @@
 </div>
 
 <style>
+	.timer-button {
+		display: flex;
+		justify-content: center;
+		align-content: center;
+		align-items: center;
+		background: #808181;
+		border-color: #eeeeee;
+		border-radius: 12px;
+		margin: 0.2em;
+	}
 </style>
