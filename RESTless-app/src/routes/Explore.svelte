@@ -187,9 +187,11 @@
 		font-size: 15px;
 	}
 	.dropdown {
-		width: 90px;
-		margin: 2px;
+		width: 110px;
+		margin: 3px;
 		text-transform: capitalize;
+		border: 1px solid black;
+		text-overflow: ellipsis;
 	}
 
 	.exercises-list {
