@@ -192,6 +192,7 @@
 		text-transform: capitalize;
 		border: 1px solid black;
 		text-overflow: ellipsis;
+		border-radius: 0.1cm;
 	}
 
 	.exercises-list {
