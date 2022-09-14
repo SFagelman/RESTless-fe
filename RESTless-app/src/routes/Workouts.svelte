@@ -167,7 +167,7 @@
 		flex-direction: column;
 		align-items: center;
 		height: 450px;
-		overflow-y: scroll;
+		overflow-y: auto;
 		overflow-x: hidden;
 	}
 
@@ -178,6 +178,10 @@
 
 	.main-panel {
 		width: 95%;
+	}
+
+	.sub-panel {
+		width: 90%;
 	}
 
 	.premade-workout-list {

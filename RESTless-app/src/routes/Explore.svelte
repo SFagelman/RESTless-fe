@@ -196,7 +196,7 @@
 		font-size: 1rem;
 		list-style: none;
 		height: 410px;
-		overflow-y: scroll;
+		overflow-y: auto;
 		/* border: 1px dashed; */
 		border-radius: 0.1cm;
 		/* margin: px; */
