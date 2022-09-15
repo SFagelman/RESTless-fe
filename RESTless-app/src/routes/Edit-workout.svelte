@@ -81,6 +81,9 @@
 	<!-- <h1>{$currentWorkout.workout_name} workout</h1> -->
 	<button on:click={() => navToWorkout()}>Back to Workout</button>
 	<button on:click={toggleChange}>Edit</button>
+	{#if change}
+		<a href="explore" class="add-exercise-link" use:link>Add exercises</a>
+	{/if}
 	<p class="rest-time">Rest time: {$currentWorkout.rest_timer} sec.</p>
 	{#if change && !isLoading}
 		<input
@@ -90,9 +93,6 @@
 			min="0"
 			max="300"
 		/>
-	{/if}
-	{#if change}
-		<a href="explore" class="link" use:link>Add exercises</a>
 	{/if}
 	{#if loadingError}
 		<p>Network error, try again!</p>
@@ -167,7 +167,6 @@
 		/* height: 500px; */
 		/* padding: 0px; */
 	}
-
 	.rest-time {
 		margin: 8px auto;
 		width: 150px;
@@ -179,6 +178,9 @@
 	/* input[type='range'] {
 		background-color: #8f3434;
 	} */
+	button {
+		margin-bottom: 5px;
+	}
 
 	.delete-button {
 		margin-top: 5px;
