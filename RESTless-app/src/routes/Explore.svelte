@@ -187,7 +187,7 @@
 		font-size: 15px;
 	}
 	.dropdown {
-		width: 110px;
+		width: 100px;
 		margin: 3px;
 		text-transform: capitalize;
 		border: 1px solid black;

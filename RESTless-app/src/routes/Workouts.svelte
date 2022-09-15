@@ -173,9 +173,9 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		height: 450px;
+		/* height: 450px; */
 		overflow-y: auto;
-		overflow-x: hidden;
+		/* overflow-x: hidden; */
 	}
 
 	.workouts-title {
