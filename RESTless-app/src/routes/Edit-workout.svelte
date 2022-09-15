@@ -107,6 +107,7 @@
 					<p>Sets: {exercise.NumberOfSets}</p>
 					{#if change && !isLoading}
 						<input
+							class="slider"
 							on:change={() => handleSetChange(exercise._id)}
 							type="range"
 							bind:value={exercise.NumberOfSets}
@@ -125,7 +126,7 @@
 								type="range"
 								min="0"
 								max="150"
-								step="0.25"
+								step="0.5"
 								bind:value={set.weight}
 							/>
 							Modify Reps :<input
@@ -138,7 +139,9 @@
 						{/if}
 					{/each}
 					{#if change}
-						<button on:click={() => handleDelete(exercise)}>Delete Exercise</button>
+						<button class="delete-button" on:click={() => handleDelete(exercise)}
+							>Delete Exercise</button
+						>
 					{/if}
 				</section>
 				<img src={exercise.gifUrl} alt={exercise.name} />
@@ -154,6 +157,7 @@
 		box-sizing: border-box;
 		max-width: 360px;
 		/* overflow-y: hidden; */
+		overflow-x: hidden;
 	}
 	.home-container {
 		justify-content: center;
@@ -170,6 +174,14 @@
 		border-radius: 0.1cm;
 		border: 2px solid #8f3434;
 		justify-content: space-around;
+	}
+
+	/* input[type='range'] {
+		background-color: #8f3434;
+	} */
+
+	.delete-button {
+		margin-top: 5px;
 	}
 
 	.exercises-list {

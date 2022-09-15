@@ -1,12 +1,11 @@
 <script>
 	import Timer from '../components/Timer.svelte';
 	import { currentWorkout, currentWorkoutTracker } from '../stores';
-    import { navigate } from 'svelte-routing';
+	import { navigate } from 'svelte-routing';
 
-    const navToExercise = () => {
+	const navToExercise = () => {
 		navigate('edit-workout');
 	};
-    
 </script>
 
 <div class="workout-container">
@@ -34,12 +33,12 @@
 	<section class="timer">
 		<Timer />
 	</section>
-	<section class="rating-title">
+	<!-- <section class="rating-title">
 		<p>Workout Rating</p>
 	</section>
 	<section class="">
 		<p>Feedback</p>
-	</section>
+	</section> -->
 	<section>
 		{#if $currentWorkout.exercises[$currentWorkoutTracker.currentExercise + 1] !== undefined}
 			<p>
@@ -63,7 +62,7 @@
 		background: #d3d3d3;
 		/* height: 580px; */
 		/* margin-bottom: 5px; */
-		font-size: 1.8rem;
+		font-size: 1.6rem;
 		border: 2px solid black;
 		border-radius: 0.3cm;
 	}
@@ -75,6 +74,7 @@
 
 	.timer {
 		justify-content: center;
+		padding: 20px 0;
 	}
 
 	.workout-container button {
