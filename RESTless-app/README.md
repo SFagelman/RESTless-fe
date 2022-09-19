@@ -1,38 +1,55 @@
-# create-svelte
+# RESTless-FE
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+This project provides the front end services of a fitness application called RESTless. The goal is to provide a simple to use service that helps track weights and workout routines.
 
-## Creating a project
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Authors
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+- [@SFagelman](https://github.com/SFagelman)
+- [@SandorGonczi](https://github.com/SandorGonczi)
+- [@Chris-Rule](https://github.com/Chris-Rule)
+- [@ZeshanAhmed22](https://github.com/ZeshanAhmed22)
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
 
-## Developing
+## Lessons Learned
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+What did you learn while building this project? What challenges did you face and how did you overcome them?
 
-```bash
-npm run dev
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+## Installation
 
-## Building
-
-To create a production version of your app:
+To install all dependencies and dev-dependencies:
 
 ```bash
-npm run build
+  npm install
+```
+### Minimum Versions
+
+| Dependency | Version | Dev-Dependency | Version |
+| :---------:| :---------:| :---------:| :---------:|
+|Axios|0.27.2|NodeJS|18.1.0|
+|Svelte-Routing| 1.6.0 | Svelte|3.44.0 |
+|| | SvelteKit| 1.0.0-next.484 |
+| | | Svelte-Use-Form | 2.4.3 |
+| | | Svelte-Adapter-Auto |  1.0.0-next.75|
+| | | Prettier | 2.6.2 |
+| | | Pretter-plugin-svelte| 2.7.0 |
+| | | Vite| 3.1.0 |
+
+## Running Tests
+
+To run tests, run the following command
+
+```bash
+  npm run test
 ```
 
-You can preview the production build with `npm run preview`.
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+## Deployment
+
+To deploy this project run
+
+```bash
+  npm run dev
+```
+
